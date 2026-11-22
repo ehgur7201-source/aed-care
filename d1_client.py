@@ -24,16 +24,21 @@ class D1Error(Exception):
     """D1 호출 실패. message에는 토큰 등 비밀값을 넣지 않습니다."""
 
 
+def _env(name: str) -> str:
+    # 복사·붙여넣기나 셸 파이프로 섞여 들어온 BOM/공백을 제거합니다.
+    return os.environ.get(name, "").strip().lstrip("\ufeff").strip()
+
+
 def account_config() -> tuple[str, str] | None:
-    account = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip()
-    token = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
+    account = _env("CLOUDFLARE_ACCOUNT_ID")
+    token = _env("CLOUDFLARE_API_TOKEN")
     if not account or not token:
         return None
     return account, token
 
 
 def database_id() -> str:
-    return os.environ.get("D1_DATABASE_ID", "").strip()
+    return _env("D1_DATABASE_ID")
 
 
 def is_configured() -> bool:

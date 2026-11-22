@@ -91,7 +91,10 @@ class DBError(Exception):
 # ---------------------------------------------------------------------------
 DATASET_TTL_SECONDS = 6 * 3600
 D1_PAGE_ROWS = 5000
-DATASET_CACHE_FILE = ROOT / ".cache" / "aed_d1.json"
+# Vercel 함수는 /tmp만 쓸 수 있습니다(같은 인스턴스가 살아 있는 동안 유지).
+DATASET_CACHE_FILE = (Path("/tmp/aedcare") if os.environ.get("VERCEL") else ROOT / ".cache") / "aed_d1.json"
+# 공개 AED 데이터 응답은 CDN(Vercel 등)에 캐시해 함수 실행과 D1 읽기를 줄입니다.
+PUBLIC_CACHE = "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
 ROW_FIELDS = ("id", "name", "address", "detail_address", "sido", "gugun", "latitude", "longitude", "source_maker", "source_model")
 _dataset_lock = threading.Lock()
 _dataset: dict[str, Any] = {"at": 0.0, "rows": [], "json": b"", "gzip": b"", "count": 0, "generatedAt": ""}
@@ -180,7 +183,8 @@ def get_dataset(force: bool = False) -> dict[str, Any]:
                 _dataset["at"] = now - DATASET_TTL_SECONDS + 600  # 10분 뒤 재시도
                 return _dataset
             raise DBError(HTTPStatus.BAD_GATEWAY, "DB_UNREACHABLE", f"데이터베이스 조회 실패: {exc}") from exc
-        generated_at = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+        # 서버 위치(Vercel은 UTC)와 관계없이 한국 시간으로 기록합니다.
+        generated_at = time.strftime("%Y-%m-%dT%H:%M:%S+0900", time.gmtime(now + 9 * 3600))
         _install_dataset(rows, now, generated_at)
         try:
             DATASET_CACHE_FILE.parent.mkdir(exist_ok=True)
@@ -246,12 +250,12 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
         # Browser requests never include the SafeMap key. Keep logs concise.
         super().log_message(format, *args)
 
-    def send_json(self, status: int, payload: dict[str, Any]) -> None:
+    def send_json(self, status: int, payload: dict[str, Any], cache: str = "no-store") -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", cache)
         self.end_headers()
         self.wfile.write(body)
 
@@ -313,7 +317,7 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
             self.send_header("Content-Encoding", "gzip")
         self.send_header("Vary", "Accept-Encoding")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "private, max-age=600")
+        self.send_header("Cache-Control", PUBLIC_CACHE)
         self.end_headers()
         self.wfile.write(body)
 
@@ -347,7 +351,7 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
         except DBError as exc:
             self.send_json(exc.status, {"error": exc.code, "message": exc.message})
             return
-        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows), "limit": limit, "truncated": len(rows) >= limit})
+        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows), "limit": limit, "truncated": len(rows) >= limit}, PUBLIC_CACHE)
 
     def handle_aeds_nearest(self, query: str) -> None:
         """GET /api/aeds/nearest?lat=&lng=[&limit=5] — 반경을 넓혀 가며 가까운 AED를 찾습니다."""
@@ -371,10 +375,10 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
         except DBError as exc:
             self.send_json(exc.status, {"error": exc.code, "message": exc.message})
             return
-        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows)})
+        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows)}, PUBLIC_CACHE)
 
     def handle_safemap(self, query: str) -> None:
-        service_key = os.environ.get("SAFEMAP_SERVICE_KEY", "").strip()
+        service_key = os.environ.get("SAFEMAP_SERVICE_KEY", "").strip().lstrip("\ufeff").strip()
         if not service_key:
             self.send_json(
                 HTTPStatus.SERVICE_UNAVAILABLE,

@@ -59,6 +59,15 @@ D1 무료 플랜은 하루 쓰기 10만 행, 읽기 500만 행이며, 넘으면 
 - 응답에는 이름·주소·좌표·제조사·모델·거리만 포함되며 담당자 이름·연락처는 포함하지 않습니다.
 - 지도는 전국에서 시작합니다. 확대 수준 14 미만은 숫자 묶음, 14 이상은 개별 위치와 상세 정보를 표시합니다.
 
+## Vercel 배포
+
+운영 주소: https://aed-care.vercel.app
+
+- 정적 파일(`index.html`, `vendor/`)은 Vercel CDN이, `/api/*`는 Python 함수 `api/index.py`(서울 `icn1`)가 처리합니다. 함수는 `server.py`의 API 코드를 그대로 사용합니다.
+- 환경 변수 `SAFEMAP_SERVICE_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `D1_DATABASE_ID`를 Vercel 프로젝트(Production)에 비밀값으로 등록합니다.
+- 공공 AED 응답은 CDN에 1시간 캐시합니다. 함수가 새로 시작될 때만 D1 전체(약 6만 2천 행)를 읽습니다.
+- 다시 배포: `npx vercel deploy --prod`
+
 ## 보안 범위
 
 현재 관리자 로그인과 관리 기기 저장(브라우저 localStorage)은 시연용입니다. 실제 배포 전 서버 인증, 기관별 권한, 비밀관리, 백업을 추가해야 합니다.
