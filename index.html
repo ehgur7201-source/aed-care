@@ -15,18 +15,19 @@
 <style>
 /* 디자인 정리: unslop 절차 적용 — unslop by Damir Sokolovsky (@heydamir), CC BY 4.0. 아이콘: Lucide (ISC) */
 :root{
-  /* 세계: 공공건물 로비 벽의 AED 보관함과 비상 안내 표지. 무광 회색 함 위의 빨간 하트 하나 */
-  --bg:#fafafa; --surface:#ffffff; --surface-2:#f4f4f5; --line:rgba(23,23,23,.09); --line-soft:rgba(23,23,23,.06);
-  --text:#171717; --text-2:#525252; --muted:#6b6b6b; --faint:#737373;
-  --brand:#c62a22; --brand-2:#a8231c; --accent:#1f6bff; --accent-2:#1557d6;
-  --ok:#15803d; --ok-bg:rgba(21,128,61,.08); --ok-line:rgba(21,128,61,.24);
-  --warn:#a16207; --warn-bg:rgba(161,98,7,.08); --warn-line:rgba(161,98,7,.26);
-  --danger:#c81e1e; --danger-bg:rgba(200,30,30,.07); --danger-line:rgba(200,30,30,.24);
+  /* 어두운 바탕(랜딩 섹션과 같은 톤). 강조색 파랑, 응급만 빨강 */
+  --bg:#000000; --surface:#1c1c1e; --surface-2:#26262a; --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.06);
+  --text:#f5f5f7; --text-2:#c7c7cc; --muted:#9a9aa2; --faint:#8a8a92;
+  --brand:#e5342c; --brand-2:#c62a22; --accent:#3d86ff; --accent-2:#2f6bff;
+  --ok:#34c77b; --ok-bg:rgba(52,199,123,.12); --ok-line:rgba(52,199,123,.32);
+  --warn:#e8a93b; --warn-bg:rgba(232,169,59,.12); --warn-line:rgba(232,169,59,.32);
+  --danger:#ff5a5f; --danger-bg:rgba(255,90,95,.12); --danger-line:rgba(255,90,95,.34);
   --r-sm:8px; --r:10px; --r-lg:14px; --r-xl:16px;
-  --shadow:0 8px 24px rgba(0,0,0,.08); --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow:0 12px 32px rgba(0,0,0,.55); --shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --curve:cubic-bezier(.22,1,.36,1);
   --ease:color .15s var(--curve),background-color .15s var(--curve),border-color .15s var(--curve),box-shadow .15s var(--curve),opacity .2s var(--curve),transform .2s var(--curve);
   --topbar:60px;
+  color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -72,7 +73,7 @@ img{max-width:100%}
 
 /* ---------- top bar ---------- */
 .topbar{height:var(--topbar);position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;padding:0 20px;
-  background:#fff;border-bottom:1px solid var(--line)}
+  background:rgba(0,0,0,.88);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:0}
 .brand-mark{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:#fff;background:var(--brand)}
 .brand b{font-size:16px;line-height:1.05;display:block}
@@ -110,9 +111,9 @@ img{max-width:100%}
 
 /* ---------- map layout ---------- */
 .map-layout{display:grid;grid-template-columns:360px 1fr;gap:16px;align-items:stretch;height:calc(100vh - var(--topbar) - 120px);min-height:520px}
-.map-stage{position:relative;min-width:0;min-height:520px;border-radius:var(--r-lg);overflow:hidden;background:#f4f4f5}
+.map-stage{position:relative;min-width:0;min-height:520px;border-radius:var(--r-lg);overflow:hidden;background:#151517}
 #map{width:100%;height:100%;min-height:520px;border-radius:var(--r-lg);border:1px solid var(--line);z-index:1;background:
-  linear-gradient(rgba(23,23,23,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(23,23,23,.05) 1px,transparent 1px),#f4f4f5;background-size:48px 48px}
+  linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),#151517;background-size:48px 48px}
 .map-status-notice{position:absolute;left:12px;right:12px;bottom:12px;z-index:500;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.94);border:1px solid var(--line);box-shadow:var(--shadow-sm);font-size:12px;color:var(--text-2);pointer-events:none}
 #dbItems{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
 .db-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px}.db-head span{font-size:12px;font-weight:400;color:var(--muted)}
@@ -120,10 +121,10 @@ img{max-width:100%}
 .db-cluster{border-radius:50%;background:rgba(15,139,141,.88);color:#fff;font-weight:600;font-size:12px;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.18);cursor:pointer;white-space:nowrap;font-variant-numeric:tabular-nums}
 .db-cluster:hover{background:#0b6f71}
 .db-sido{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.db-sido-btn{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:12px;color:var(--text);text-align:left}
+.db-sido-btn{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;font-size:12px;color:var(--text);text-align:left}
 .db-sido-btn:hover{background:var(--surface-2)}.db-sido-btn span{color:var(--muted);font-weight:400;white-space:nowrap;font-variant-numeric:tabular-nums}
 .map-status-notice.ok{border-color:var(--ok-line);color:var(--ok)}.map-status-notice.warn{border-color:var(--warn-line);color:var(--warn)}.map-status-notice.danger{border-color:var(--danger-line);color:var(--danger)}
-.static-map{position:relative;width:100%;height:100%;min-height:520px;overflow:hidden;background:linear-gradient(rgba(23,23,23,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(23,23,23,.06) 1px,transparent 1px),#f4f4f5;background-size:52px 52px,52px 52px,auto}
+.static-map{position:relative;width:100%;height:100%;min-height:520px;overflow:hidden;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),#151517;background-size:52px 52px,52px 52px,auto}
 .static-map:before{content:"대한민국 좌표 기반 오프라인 지도";position:absolute;left:18px;top:16px;color:var(--muted);font-size:12px;font-weight:600}
 .static-map-marker{position:absolute;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:translate(-50%,-100%) rotate(-45deg);border:2px solid #fff;box-shadow:0 3px 10px rgba(24,33,47,.3);cursor:pointer}
 .static-map-marker span{display:grid;place-items:center;height:16px;transform:rotate(45deg);color:#fff}.static-map-marker.active{outline:3px solid rgba(23,23,23,.35)}
@@ -270,10 +271,10 @@ img{max-width:100%}
 .filter-summary{font-size:12px;color:var(--muted);margin:2px 0 12px}
 .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}.check-item{display:flex;align-items:flex-start;gap:8px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--surface-2);font-size:13px}.check-item input{margin-top:4px;accent-color:var(--brand)}
 .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-cell{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--surface-2)}.detail-cell small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.detail-cell b{font-size:13px}
-.timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:16px}.tl-item{position:relative;padding:0 0 12px}.tl-item:before{content:"";position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff}.tl-item time{font-size:12px;color:var(--muted)}.tl-item h5{font-size:13px;margin:2px 0}.tl-item p{font-size:12px;color:var(--text-2)}
-.badge.demo{color:#854d0e;background:#fef9c3;border:1px solid rgba(133,77,14,.25)}
+.timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:16px}.tl-item{position:relative;padding:0 0 12px}.tl-item:before{content:"";position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}.tl-item time{font-size:12px;color:var(--muted)}.tl-item h5{font-size:13px;margin:2px 0}.tl-item p{font-size:12px;color:var(--text-2)}
+.badge.demo{color:#f5c451;background:rgba(245,196,81,.12);border:1px solid rgba(245,196,81,.32)}
 .dot.warn{background:var(--warn)}
-.demo-banner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid rgba(133,77,14,.22);background:#fefce8;color:#713f12;border-radius:12px;padding:8px 12px;font-size:13px;margin-bottom:16px}
+.demo-banner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid rgba(245,196,81,.28);background:rgba(245,196,81,.08);color:#f5d68a;border-radius:12px;padding:8px 12px;font-size:13px;margin-bottom:16px}
 .demo-banner .btn{margin-left:auto}
 .reco-panel{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);margin-bottom:12px}
 .reco-head{display:flex;align-items:center;gap:8px;justify-content:space-between;font-size:14px;margin-bottom:4px}
@@ -299,7 +300,7 @@ img{max-width:100%}
 .sched-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.sched-grid .control{padding:8px;font-size:12px}
 @media(max-width:640px){.sched-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ---------- 시민 홈: 랜딩형 (밝은 그라데이션 히어로 + 어두운 섹션) ---------- */
-.lp{margin:-24px -20px -64px;font-feature-settings:"tnum"}
+.lp{margin:-24px -20px -64px;background:#000;font-feature-settings:"tnum"}
 .lp-hero{position:relative;overflow:hidden;text-align:center;padding:72px 24px 0;min-height:620px;color:#fff;background:linear-gradient(180deg,#14c8e6 0%,#1e9cf0 45%,#2f6bff 100%)}
 .lp-eyebrow{font-size:13px;font-weight:600;color:#3d86ff;margin-bottom:12px}.lp-eyebrow.light{color:rgba(255,255,255,.9)}.lp-eyebrow.small{font-size:12px}
 .lp-hero h1{font-size:64px;line-height:1.08;font-weight:800;letter-spacing:-.03em}
@@ -313,7 +314,7 @@ img{max-width:100%}
 .lp-btn:active{transform:scale(.98)}
 .lp-phone{position:relative;width:280px;height:360px;margin:48px auto 0;border-radius:44px 44px 0 0;background:#101012;padding:12px 12px 0;box-shadow:0 30px 60px rgba(10,30,90,.35)}
 .lp-notch{position:absolute;left:50%;top:22px;transform:translateX(-50%);width:92px;height:26px;border-radius:14px;background:#000;z-index:2}
-.lp-screen{height:100%;border-radius:34px 34px 0 0;background:#fff;color:#171717;padding:56px 16px 0;text-align:left;overflow:hidden}
+.lp-screen{height:100%;border-radius:34px 34px 0 0;background:#0b0b0d;color:#f5f5f7;padding:56px 16px 0;text-align:left;overflow:hidden}
 .lp-app-top{display:flex;justify-content:space-between;align-items:center;font-size:14px}
 .lp-app-card{margin-top:16px;border-radius:16px;padding:16px;color:#fff;background:linear-gradient(160deg,#4fd3ec,#2f6bff)}
 .lp-app-visual{display:grid;place-items:center;height:150px}.lp-app-visual svg{width:104px;height:auto}
@@ -339,6 +340,14 @@ img{max-width:100%}
 #view .demo-banner + .lp{margin-top:0}
 @media(max-width:900px){.lp-hero h1{font-size:40px}.lp-dark h2{font-size:28px}.lp-stats,.lp-feature{grid-template-columns:1fr}.lp-links{grid-template-columns:1fr 1fr}.lp-feature h3{font-size:22px}.lp-dark{padding:72px 20px 80px}}
 @media(max-width:640px){.lp{margin:-16px -12px -48px}.lp-hero{padding-top:48px;min-height:560px}.lp-hero h1{font-size:34px}.lp-phone{width:240px;height:320px}}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+.leaflet-bar a{background:var(--surface);color:var(--text);border-color:var(--line)}.leaflet-bar a:hover{background:var(--surface-2)}
+.leaflet-control-attribution{background:rgba(0,0,0,.6)!important;color:var(--muted)}.leaflet-control-attribution a{color:var(--text-2)}
+.control{color-scheme:dark}select.control option{background:var(--surface);color:var(--text)}
+.btn.solid{color:#fff}.toast{background:#2c2c30;border:1px solid var(--line)}
+.overlay{background:rgba(0,0,0,.6)}
+::-webkit-scrollbar-thumb{background:#3a3a3f}
 .top-export{white-space:nowrap}.notice-box{border:1px solid var(--warn-line);background:var(--warn-bg);border-radius:12px;padding:12px;font-size:13px;color:var(--text-2)}
 
 @media(max-width:1100px){.cta-grid{grid-template-columns:repeat(2,1fr)}.filter-panel{grid-template-columns:1fr 1fr}}
@@ -734,7 +743,7 @@ function devicesByUrgency(list){
 const SEED=[];
 
 /* ============================================================
-   PRODUCTS — 나눔테크 AED 제품 5종
+   PRODUCTS — AED 제품 5종
    세부 조작 순서는 공식 매뉴얼 저작권을 피해 AED 표준 절차로 재구성.
    사진은 저작권상 실제 이미지 대신 SVG 일러스트. img 경로로 교체 가능.
    ============================================================ */
@@ -749,23 +758,21 @@ const AED_COMMON_STEPS=[
 ];
 const PRODUCTS=[
   {id:"NT-381",name:"HeartPlus NT-381",tag:"",color:"#e3342f",img:"images/nt-381.jpg",
-   manufacturer:"(주)나눔테크",model_code:"NT-381",desc:"나눔테크 반자동 제세동기(AED).",
+   manufacturer:"",model_code:"NT-381",desc:"반자동 제세동기(AED)",
    verified:false,features:[],steps:AED_COMMON_STEPS},
   {id:"NT-381C",name:"HeartPlus II NT-381.C",tag:"",color:"#c81e1a",img:"images/nt-381c.jpg",
-   manufacturer:"(주)나눔테크",model_code:"NT-381.C",desc:"나눔테크 반자동 제세동기(AED).",
+   manufacturer:"",model_code:"NT-381.C",desc:"반자동 제세동기(AED)",
    verified:false,features:[],steps:AED_COMMON_STEPS},
   {id:"NT-180",name:"HeartPlus NT-180",tag:"",color:"#2f6bff",img:"images/nt-180.jpg",
-   manufacturer:"(주)나눔테크",model_code:"NT-180",desc:"나눔테크 반자동 제세동기(AED).",
+   manufacturer:"",model_code:"NT-180",desc:"반자동 제세동기(AED)",
    verified:false,features:[],steps:AED_COMMON_STEPS},
   {id:"HeartPro",name:"HeartPro",tag:"",color:"#14a86a",img:"images/heartpro.jpg",
-   manufacturer:"(주)나눔테크",model_code:"",desc:"나눔테크 제세동기(AED).",
+   manufacturer:"",model_code:"",desc:"제세동기(AED)",
    verified:false,features:[],steps:AED_COMMON_STEPS},
   {id:"ReHeart",name:"ReHeart NT-381.M",tag:"",color:"#8bc34a",img:"images/reheart.jpg",
-   manufacturer:"(주)나눔테크",model_code:"NT-381.M",desc:"나눔테크 반자동 제세동기(AED).",
+   manufacturer:"",model_code:"NT-381.M",desc:"반자동 제세동기(AED)",
    verified:false,features:[],steps:AED_COMMON_STEPS},
 ];
-/* 제품 제조사 공식 문의 (사이트맵·푸터에서 확인된 정보) */
-const NANOOM_CONTACT={tel:"062-955-8588",email:"nnt@nanoomtech.co.kr",site:"https://www.nanoomtech.co.kr/"};
 const PRODUCT_MAP={};PRODUCTS.forEach(p=>PRODUCT_MAP[p.id]=p);
 function productName(id){return (PRODUCT_MAP[id]&&PRODUCT_MAP[id].name)||id||"미지정";}
 
@@ -1133,21 +1140,21 @@ function popupHtml(d,st){
   const last=Store.lastInspection(d);
   const loc=[d.building,d.floor,d.spot].filter(Boolean).join(" ");
   const srcLabel={manual:"직접 입력",csv:"CSV 등록",public:"공공데이터"}[d.source]||"미확인";
-  const field=(label,val)=>`<span style="font-size:12px;color:#48566b">${label}: ${val?esc(val):'<span style="color:#9aa6bb">정보 미확인</span>'}</span><br>`;
+  const field=(label,val)=>`<span style="font-size:12px;color:var(--text-2)">${label}: ${val?esc(val):'<span style="color:var(--muted)">정보 미확인</span>'}</span><br>`;
   const acc=accessStatus(d),cond=deviceCondition(d);
   return `<div style="min-width:200px"><b>${esc(d.name)}</b> ${demoTag(d)}<br>
     <span class="muted" style="font-size:12px">${esc(d.address)}</span><br>
     <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px">${accessBadge(acc)}${conditionBadge(cond)}</div>
-    <span style="font-size:12px;color:#48566b">${esc(acc.reason)}</span><br>
+    <span style="font-size:12px;color:var(--text-2)">${esc(acc.reason)}</span><br>
     ${field("상세 위치",loc)}
     ${field("운영시간표",hasAccessSchedule(d)?scheduleSummary(d):"")}
     ${field("출입 메모",[d.access_note,d.hours,d.access].filter(Boolean).join(" · "))}
-    <span style="font-size:12px;color:#48566b">최근 점검: ${last?last.date:'<span style="color:#9aa6bb">기록 없음</span>'}</span><br>
-    <span style="font-size:12px;color:#9aa6bb">출처 ${srcLabel} (기관 확인 정보) · 마지막 확인 ${esc(lastConfirmedText(d,cond))}</span><br>
+    <span style="font-size:12px;color:var(--text-2)">최근 점검: ${last?last.date:'<span style="color:var(--muted)">기록 없음</span>'}</span><br>
+    <span style="font-size:12px;color:var(--muted)">출처 ${srcLabel} (기관 확인 정보) · 마지막 확인 ${esc(lastConfirmedText(d,cond))}</span><br>
     <button class="btn sm" type="button" data-open-detail="${esc(d.id)}" style="margin:8px 0 2px">상세·현장 안내</button><br>
     <a href="https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lng}" target="_blank"
-      style="color:#171717;font-size:12px;font-weight:600;text-decoration:underline">길찾기(실제 경로) →</a>
-    <span style="font-size:12px;color:#9aa6bb;display:block">※ 지도 직선거리와 실제 도보 경로는 다를 수 있습니다.</span></div>`;
+      style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:underline">길찾기(실제 경로) →</a>
+    <span style="font-size:12px;color:var(--muted);display:block">※ 지도 직선거리와 실제 도보 경로는 다를 수 있습니다.</span></div>`;
 }
 function renderAedItems(list){
   const box=$("#aedItems");if(!box)return;
@@ -1242,18 +1249,18 @@ function dbPopupHtml(a){
   const device=[a.source_maker,a.source_model].filter(Boolean).join(" ");
   const dist=a.distance_m!=null&&Number.isFinite(Number(a.distance_m))?` · ${_dbOriginLabel} 직선거리 ${fmtDist(a.distance_m)}`:"";
   return `<div style="min-width:200px"><b>${esc(a.name)}</b><br>
-    <span style="font-size:12px;color:#0f8b8d;font-weight:600">공공데이터 설치 위치 (SafeMap)</span><br>
-    <span style="font-size:12px;color:#48566b">${esc(a.address)}</span><br>
-    ${a.detail_address?`<span style="font-size:12px;color:#48566b">상세 위치: ${esc(a.detail_address)}</span><br>`:""}
-    ${device?`<span style="font-size:12px;color:#48566b">기기: ${esc(device)}</span><br>`:""}
-    <span style="font-size:12px;color:#7a879e;font-weight:600;display:block;margin-top:8px">기관 확인 정보</span>
+    <span style="font-size:12px;color:#3fc7c9;font-weight:600">공공데이터 설치 위치 (SafeMap)</span><br>
+    <span style="font-size:12px;color:var(--text-2)">${esc(a.address)}</span><br>
+    ${a.detail_address?`<span style="font-size:12px;color:var(--text-2)">상세 위치: ${esc(a.detail_address)}</span><br>`:""}
+    ${device?`<span style="font-size:12px;color:var(--text-2)">기기: ${esc(device)}</span><br>`:""}
+    <span style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-top:8px">기관 확인 정보</span>
     <span class="badge neutral">출입: 출입 미확인</span> <span class="badge neutral">기기: 상태 미확인</span><br>
-    <span style="font-size:12px;color:#9aa6bb">기관이 확인한 운영시간·점검 기록이 없습니다.</span><br>
-    <span style="font-size:12px;color:#9aa6bb">출처 공공데이터(SafeMap) DB · 원본 ID ${esc(a.id)}${dist}</span><br>
+    <span style="font-size:12px;color:var(--muted)">기관이 확인한 운영시간·점검 기록이 없습니다.</span><br>
+    <span style="font-size:12px;color:var(--muted)">출처 공공데이터(SafeMap) DB · 원본 ID ${esc(a.id)}${dist}</span><br>
     ${adminUnlocked?`<button class="btn sm" data-pub-register="${esc(a.id)}" style="margin:8px 0 2px">원본 ID로 관리 대상 등록</button><br>`:""}
     <a href="https://www.google.com/maps/dir/?api=1&destination=${Number(a.latitude)},${Number(a.longitude)}" target="_blank" rel="noopener"
-      style="color:#171717;font-size:12px;font-weight:600;text-decoration:underline">길찾기(실제 경로) →</a>
-    <span style="font-size:12px;color:#9aa6bb;display:block">※ 공공데이터 기준 위치이며 실제 설치 상태는 현장에서 확인하세요.</span></div>`;
+      style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:underline">길찾기(실제 경로) →</a>
+    <span style="font-size:12px;color:var(--muted);display:block">※ 공공데이터 기준 위치이며 실제 설치 상태는 현장에서 확인하세요.</span></div>`;
 }
 function renderDbItems(items,message){
   const box=$("#dbItems");if(!box)return;
@@ -1484,12 +1491,12 @@ function citizenExpiry(date){
 }
 
 /* ============================================================
-   VIEW: 제품별 사용방법 (시민용) — 나눔테크 AED 5종
+   VIEW: 제품별 사용방법 (시민용) — AED 5종
    ============================================================ */
 Views.products=function(host){
   host.innerHTML=`
     <div class="page-head">
-      <div><h1>나눔테크 AED 제품별 사용방법</h1><p>설치된 제품을 선택하면 해당 모델의 사용 절차를 안내합니다</p></div>
+      <div><h1>AED 제품별 사용방법</h1><p>설치된 제품을 선택하면 해당 모델의 사용 절차를 안내합니다</p></div>
       <div class="head-actions"><button class="btn" data-go="learn">${ico("book")} 공통 사용법 보기</button></div>
     </div>
     <div class="product-grid">
@@ -1504,7 +1511,7 @@ Views.products=function(host){
       </button>`).join("")}
     </div>
     <p class="muted" style="font-size:12px;margin-top:16px">사용 절차는 AED 공통 표준 절차 기준입니다. 모델별 세부 조작은 각 제품 사용설명서를 따르세요.<br>
-    제품 사진이 없으면 모델별 일러스트로 표시됩니다. <code>images/</code> 폴더에 사진을 넣으면 자동 반영됩니다. (사진 출처: 나눔테크)</p>`;
+    제품 사진이 없으면 모델별 일러스트로 표시됩니다. <code>images/</code> 폴더에 사진을 넣으면 자동 반영됩니다.</p>`;
   host.querySelector("[data-go]").addEventListener("click",()=>go("learn"));
   host.querySelectorAll("[data-pid]").forEach(b=>b.addEventListener("click",()=>openProductGuide(b.dataset.pid)));
 };
@@ -1519,7 +1526,6 @@ function openProductGuide(pid){
     </div>
     <div class="gi-lbl">제품 정보</div>
     <ul class="gi-prep" style="font-size:13px">
-      <li>제조사: ${esc(p.manufacturer||"미확인")}</li>
       <li>모델 코드: ${p.model_code?esc(p.model_code):'<span class="muted">미확인</span>'}</li>
       <li>공식 사용설명서: <span class="muted">미확인 — 제조사 확인 필요</span></li>
       <li>소모품(배터리·패드) 호환 정보: <span class="muted">미확인 — 제조사 확인 필요</span></li>
@@ -1529,8 +1535,7 @@ function openProductGuide(pid){
     <div class="gi-lbl" style="margin-top:16px">사용 절차 (AED 공통 표준)</div>
     <ol class="prod-steps">${p.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
     <div style="background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:10px;padding:12px;margin-top:12px;font-size:12px;color:var(--text-2)">
-      제품 세부 사양·공식 사용설명서·소모품 호환 정보는 <b>공식 자료로 검증되지 않았습니다.</b> 정확한 내용은 제조사에 확인하세요.<br>
-      전화 ${esc(NANOOM_CONTACT.tel)} · 이메일 ${esc(NANOOM_CONTACT.email)} · <a href="${NANOOM_CONTACT.site}" target="_blank" style="color:var(--accent)">제조사 사이트</a>
+      제품 세부 사양·공식 사용설명서·소모품 호환 정보는 <b>공식 자료로 검증되지 않았습니다.</b> 정확한 내용은 제조사에 확인하세요.
     </div>
     <div style="display:flex;gap:8px;margin-top:16px">
       <button class="btn block" onclick="closeModal()">닫기</button>
@@ -1887,7 +1892,7 @@ function openDeviceModal(id,prefill){
   const val=k=>esc(s[k]==null?"":s[k]);
   openModal(`
     <div class="modal-head"><h2>${d?"기기 수정":"AED 등록"}</h2><button class="btn sm ghost" onclick="closeModal()" aria-label="닫기">${ico("x")}</button></div>
-    ${isDemoMode()?'<div class="demo-banner" style="margin-bottom:12px">${ico("flask")} 시연 모드에서 등록·수정한 기기는 <b>시연용</b>으로 표시되고 운영 데이터와 분리 저장됩니다.</div>':""}
+    ${isDemoMode()?`<div class="demo-banner" style="margin-bottom:12px">${ico("flask")} 시연 모드에서 등록·수정한 기기는 <b>시연용</b>으로 표시되고 운영 데이터와 분리 저장됩니다.</div>`:""}
     <form id="deviceForm">
       <div class="field"><label>설치 장소명 *</label><input class="control" name="name" required value="${val("name")}" placeholder="예: 조선이공대 본관 1층 로비"></div>
       <div class="field"><label>주소 *</label><input class="control" name="address" required value="${val("address")}" placeholder="광주 동구 ..."></div>
