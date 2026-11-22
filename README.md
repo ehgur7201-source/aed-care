@@ -98,3 +98,5 @@ D1 무료 플랜은 하루 쓰기 10만 행, 읽기 500만 행이며, 넘으면 
 ## Third-party license
 
 Leaflet 1.9.4 is included under the BSD 2-Clause License. See `vendor/leaflet/LICENSE`.
+
+감사표·방향·9단계 기록과 과정 영상은 `unslop-story/`(REPORT.md, aedcare-unslop-story.mp4)에 있습니다. 화면 디자인은 [unslop](https://github.com/heydamir/unslop) 절차(unslop by Damir Sokolovsky, [@heydamir](https://x.com/heydamir), CC BY 4.0)를 따라 정리했습니다. 아이콘은 [Lucide](https://lucide.dev)(ISC) 일부를 내장했고, 글꼴은 Pretendard(SIL OFL, CDN)이며 연결이 없으면 시스템 글꼴로 표시됩니다.
