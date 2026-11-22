@@ -263,6 +263,30 @@ img{max-width:100%}
 .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}.check-item{display:flex;align-items:flex-start;gap:8px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface-2);font-size:13px}.check-item input{margin-top:3px;accent-color:var(--brand)}
 .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.detail-cell{border:1px solid var(--line);border-radius:10px;padding:11px;background:var(--surface-2)}.detail-cell small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}.detail-cell b{font-size:13px}
 .timeline{border-left:2px solid var(--line);margin-left:7px;padding-left:17px}.tl-item{position:relative;padding:0 0 13px}.tl-item:before{content:"";position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff}.tl-item time{font-size:10px;color:var(--muted)}.tl-item h5{font-size:13px;margin:2px 0}.tl-item p{font-size:12px;color:var(--text-2)}
+.badge.demo{color:#8a5a00;background:#fff4d6;border:1px dashed #d9a400}
+.dot.warn{background:var(--warn)}
+.demo-banner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px dashed #d9a400;background:#fff8e6;color:#6b4a00;border-radius:12px;padding:9px 12px;font-size:12.5px;margin-bottom:14px}
+.demo-banner .btn{margin-left:auto}
+.reco-panel{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);margin-bottom:12px}
+.reco-head{display:flex;align-items:center;gap:6px;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.reco-ref{font-size:12px;color:var(--text-2);margin-bottom:8px}
+.reco-controls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.reco-search{display:flex;gap:6px;margin-bottom:8px}.reco-search .control{flex:1;padding:8px 10px;font-size:12.5px}
+.reco-search-result{display:grid;gap:4px;margin-bottom:8px}
+.reco-place{display:block;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:7px 9px;cursor:pointer;font-size:12px}.reco-place span{display:block;color:var(--muted);font-size:11px}.reco-place:hover{border-color:var(--accent)}
+.reco-sub{font-size:12.5px;font-weight:800;margin:10px 0 6px}
+.reco-card{border:1px solid var(--line);border-left:4px solid var(--muted);border-radius:12px;padding:10px;margin-bottom:8px;background:var(--surface)}
+.reco-card.confirmed{border-left-color:var(--ok)}.reco-card.unconfirmed{border-left-color:var(--warn)}.reco-card.excluded{border-left-color:var(--danger);background:var(--surface-2)}
+.reco-dist{font-size:12px;font-weight:700;color:var(--text-2);margin:3px 0}
+.reco-badges{display:flex;flex-wrap:wrap;gap:4px}
+.reco-why{font-size:11.5px;color:var(--text-2);margin-top:6px}.reco-why ul{margin:2px 0 0 16px}.reco-why.warn{color:var(--warn)}
+.reco-meta{font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+.reco-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.reco-alert{border-radius:10px;padding:9px 10px;font-size:12px;margin:6px 0}.reco-alert.warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--text-2)}.reco-alert.danger{background:var(--danger-bg);border:1px solid var(--danger-line);color:var(--danger)}
+.reco-excluded summary{cursor:pointer;font-size:12.5px;font-weight:800;margin:8px 0 6px}
+.route-steps{list-style:none;display:grid;gap:6px;padding:0;margin:0}.route-steps li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface-2)}.route-steps small{display:block;color:var(--muted);font-size:10px}.route-n{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+.sched-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.sched-grid .control{padding:8px;font-size:12px}
+@media(max-width:640px){.sched-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .top-export{white-space:nowrap}.notice-box{border:1px solid var(--warn-line);background:var(--warn-bg);border-radius:12px;padding:13px;font-size:12.5px;color:var(--text-2)}
 
 @media(max-width:1100px){.cta-grid{grid-template-columns:repeat(2,1fr)}.filter-panel{grid-template-columns:1fr 1fr}}
@@ -468,7 +492,7 @@ const LegacyStore={
 /* 버전 스키마 Store. LegacyStore는 v1 구조를 읽는 참고 구현이며 실제 접근은 아래 Store로 통일한다. */
 const SCHEMA_VERSION=4;
 const LEGACY_DEMO_DEVICE_IDS=new Set(["AED-001","AED-002","AED-003","AED-004","AED-005"]);
-const DEFAULT_SETTINGS={org:"AED Care 운영기관",alertDays:30,monthlyTarget:100};
+const DEFAULT_SETTINGS={org:"AED Care 운영기관",alertDays:30,monthlyTarget:100,holidays:"",demoClock:""};
 function cloneData(value){return value===undefined?undefined:JSON.parse(JSON.stringify(value));}
 function normalizeSearch(value){return String(value==null?"":value).normalize("NFKC").toLocaleLowerCase("ko-KR").replace(/\s+/g," ").trim();}
 function deviceSearchText(d){return normalizeSearch([d.name,d.address,d.building,d.floor,d.spot,d.model,productName(d.model),d.manager,d.phone,d.source_maker,d.source_model].join(" "));}
@@ -476,8 +500,13 @@ function matchesSearch(values,query){const q=normalizeSearch(query);return !q||n
 function makeTaskId(){return "T-"+Date.now().toString(36).toUpperCase()+Math.floor(Math.random()*9000+1000);}
 const Store={
   KEY:"aedcare.v1",_db:null,
-  _seed(){return {schemaVersion:SCHEMA_VERSION,virtualDataCleaned:true,settings:cloneData(DEFAULT_SETTINGS),devices:[],quiz:cloneData(SEED_QUIZ),events:[],tasks:[]};},
-  _normalizeDevice(d={}){return {...d,id:String(d.id||uid()),name:String(d.name||""),address:String(d.address||""),model:String(d.model||""),building:String(d.building||""),floor:String(d.floor||""),spot:String(d.spot||""),hours:String(d.hours||""),access:String(d.access||""),source:String(d.source||"manual"),source_maker:String(d.source_maker||""),source_model:String(d.source_model||""),lat:Number(d.lat),lng:Number(d.lng),manager:String(d.manager||""),phone:String(d.phone||""),battery_expiry:String(d.battery_expiry||""),pad_expiry:String(d.pad_expiry||""),install_date:String(d.install_date||todayStr()),inspect_cycle_days:Math.max(1,Number(d.inspect_cycle_days)||180),needs_post_use_check:Boolean(d.needs_post_use_check),inspections:Array.isArray(d.inspections)?d.inspections.map(i=>({...i,date:String(i.date||""),result:String(i.result||"정상"),inspector:String(i.inspector||""),memo:String(i.memo||""),photo:i.photo||null})):[]};},
+  _seed(){return {schemaVersion:SCHEMA_VERSION,virtualDataCleaned:true,settings:cloneData(DEFAULT_SETTINGS),devices:[],quiz:cloneData(SEED_QUIZ),events:[],tasks:[],reports:[]};},
+  _normalizeSchedule(s){const out={};["mon","tue","wed","thu","fri","sat","sun","hol"].forEach(k=>{out[k]=String((s&&s[k])||"").trim().slice(0,60);});return out;},
+  _normalizeDevice(d={}){return {...d,id:String(d.id||uid()),name:String(d.name||""),address:String(d.address||""),model:String(d.model||""),building:String(d.building||""),floor:String(d.floor||""),spot:String(d.spot||""),hours:String(d.hours||""),access:String(d.access||""),source:String(d.source||"manual"),source_maker:String(d.source_maker||""),source_model:String(d.source_model||""),lat:Number(d.lat),lng:Number(d.lng),manager:String(d.manager||""),phone:String(d.phone||""),battery_expiry:String(d.battery_expiry||""),pad_expiry:String(d.pad_expiry||""),install_date:String(d.install_date||todayStr()),inspect_cycle_days:Math.max(1,Number(d.inspect_cycle_days)||180),needs_post_use_check:Boolean(d.needs_post_use_check),
+    demo:Boolean(d.demo),public_source_id:String(d.public_source_id||"").trim().slice(0,120),public_link_checked_at:String(d.public_link_checked_at||""),
+    access_schedule:this._normalizeSchedule(d.access_schedule),access_exceptions:String(d.access_exceptions||"").slice(0,2000),access_note:String(d.access_note||"").slice(0,200),
+    access_confirmed_at:String(d.access_confirmed_at||""),access_confirmed_by:String(d.access_confirmed_by||"").slice(0,60),route_entrance:String(d.route_entrance||"").slice(0,120),
+    inspections:Array.isArray(d.inspections)?d.inspections.map(i=>({...i,date:String(i.date||""),result:String(i.result||"정상"),inspector:String(i.inspector||""),memo:String(i.memo||""),photo:i.photo||null})):[]};},
   _migrate(raw){
     if(!raw||typeof raw!=="object"||Array.isArray(raw))throw new Error("저장 데이터 형식이 올바르지 않습니다.");
     const db=cloneData(raw);const sourceVersion=Number(db.schemaVersion)||1;db.schemaVersion=SCHEMA_VERSION;
@@ -507,6 +536,7 @@ const Store={
         db.tasks=db.tasks.filter(t=>!t.deviceId||!publicIds.has(t.deviceId));
       }
     }
+    db.reports=(Array.isArray(db.reports)?db.reports:[]).filter(r=>r&&r.deviceId).map(r=>({id:String(r.id||"RP-"+Date.now().toString(36)),deviceId:String(r.deviceId),type:["locked","not_visible","wrong_location"].includes(r.type)?r.type:"locked",memo:String(r.memo||"").slice(0,200),ts:String(r.ts||new Date().toISOString()),status:["pending","approved","rejected"].includes(r.status)?r.status:"pending",reviewedAt:r.reviewedAt||null,reviewedBy:String(r.reviewedBy||""),publicNote:String(r.publicNote||"").slice(0,120)}));
     db.events.filter(e=>e.recovery!=="done").forEach(e=>{let task=db.tasks.find(t=>t.eventId===e.id&&t.type==="post_use_recovery");if(!task){task=this._recoveryTask(e);db.tasks.unshift(task);}e.taskId=task.id;});
     db.devices.forEach(d=>{d.needs_post_use_check=db.events.some(e=>e.deviceId===d.id&&e.recovery!=="done");});return db;
   },
@@ -517,8 +547,12 @@ const Store={
   listDevices(){return cloneData(this._load().devices);},
   listQuiz(){return cloneData(this._load().quiz);},
   getDevice(id){return cloneData(this._load().devices.find(d=>d.id===id)||null);},
-  addDevice(d){return this._commit(db=>{const dev=this._normalizeDevice({...d,inspections:Array.isArray(d.inspections)?d.inspections:[]});const ids=new Set(db.devices.map(x=>x.id));while(ids.has(dev.id))dev.id=uid();db.devices.push(dev);return dev;});},
-  addDevices(items){return this._commit(db=>{const ids=new Set(db.devices.map(x=>x.id));const added=[];(items||[]).forEach(item=>{const dev=this._normalizeDevice({...item,inspections:Array.isArray(item.inspections)?item.inspections:[]});while(ids.has(dev.id))dev.id=uid();ids.add(dev.id);db.devices.push(dev);added.push(dev);});return added;});},
+  /* 현장 제보: 검토 대기로 저장 → 담당자 승인/반려 */
+  listReports(){return cloneData(this._load().reports||[]);},
+  addReport(r){return this._commit(db=>{db.reports=db.reports||[];if(!db.devices.some(d=>d.id===r.deviceId))throw new Error("기기를 찾을 수 없습니다.");const rep={id:"RP-"+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,5).toUpperCase(),deviceId:String(r.deviceId),type:["locked","not_visible","wrong_location"].includes(r.type)?r.type:"locked",memo:maskPersonal(r.memo),ts:new Date().toISOString(),status:"pending",reviewedAt:null,reviewedBy:"",publicNote:""};db.reports.unshift(rep);return rep;});},
+  reviewReport(id,decision,{by,publicNote}={}){return this._commit(db=>{const r=(db.reports||[]).find(x=>x.id===id);if(!r)throw new Error("제보를 찾을 수 없습니다.");if(r.status!=="pending")throw new Error("이미 검토한 제보입니다.");if(!String(by||"").trim())throw new Error("검토자를 입력하세요.");r.status=decision==="approved"?"approved":"rejected";r.reviewedAt=new Date().toISOString();r.reviewedBy=String(by).trim().slice(0,60);r.publicNote=r.status==="approved"?maskPersonal(publicNote||"").slice(0,120):"";return r;});},
+  addDevice(d){return this._commit(db=>{const dev=this._normalizeDevice({...d,demo:d.demo||isDemoMode(),inspections:Array.isArray(d.inspections)?d.inspections:[]});const ids=new Set(db.devices.map(x=>x.id));while(ids.has(dev.id))dev.id=uid();db.devices.push(dev);return dev;});},
+  addDevices(items){return this._commit(db=>{const ids=new Set(db.devices.map(x=>x.id));const added=[];(items||[]).forEach(item=>{const dev=this._normalizeDevice({...item,demo:item.demo||isDemoMode(),inspections:Array.isArray(item.inspections)?item.inspections:[]});while(ids.has(dev.id))dev.id=uid();ids.add(dev.id);db.devices.push(dev);added.push(dev);});return added;});},
   updateDevice(id,patch){return this._commit(db=>{const i=db.devices.findIndex(x=>x.id===id);if(i<0)return null;db.devices[i]=this._normalizeDevice({...db.devices[i],...patch,id});return db.devices[i];});},
   removeDevice(id){return this._commit(db=>{const before=db.devices.length;db.devices=db.devices.filter(d=>d.id!==id);return before!==db.devices.length;});},
   addInspection(deviceId,rec){return this.recordInspection(deviceId,null,rec);},
@@ -784,6 +818,7 @@ const MODES={
     {id:"devices",ico:"🛠️",label:"기기 관리"},
     {id:"recovery",ico:"🔁",label:"사용 후 복구"},
     {id:"tasks",ico:"🧰",label:"조치 작업"},
+    {id:"reports",ico:"📮",label:"현장 제보"},
     {id:"inspection",ico:"✅",label:"점검 이력"},
     {id:"report",ico:"📄",label:"점검 보고서"},
     {id:"datacenter",ico:"🌐",label:"데이터 연동"},
@@ -842,6 +877,8 @@ function go(view){
   if(activeView==="map"&&view!=="map")disposeMap();
   activeView=view;$$("#tabs .tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));updateAdminChrome();
   const host=$("#view");host.innerHTML="";(Views[view]||(()=>host.innerHTML="준비 중"))(host);
+  // 시연 모드: 모든 화면 상단에 '시연용' 표시
+  if(isDemoMode())host.insertAdjacentHTML("afterbegin",`<div class="demo-banner" role="note">🧪 <b>시연 모드</b> · 이 화면의 기기와 기록은 <b>시연용</b>이며 운영 데이터와 분리된 저장소에 있습니다.${Store.getSettings().demoClock?` · 출입 판정 기준 시각 <b>${esc(fmtSeoul(accessNow().toISOString()))}</b> (Asia/Seoul)`:""} <button class="btn sm" type="button" onclick="switchAppMode('operation')">운영 모드로</button></div>`);
 }
 $$("#modeSwitch .ms-btn").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("#overlay").addEventListener("click",closeModal);
@@ -851,7 +888,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
    VIEW: 시민 홈
    ============================================================ */
 Views.home=function(host){
-  const devices=Store.listDevices(),settings=Store.getSettings();const stat={ok:0,warn:0,danger:0};devices.forEach(d=>stat[deviceStatus(d).level]++);
+  const devices=publicDevices(),settings=Store.getSettings();const stat={ok:0,warn:0,danger:0};devices.forEach(d=>stat[deviceStatus(d).level]++);
   const inspected=devices.filter(d=>Store.lastInspection(d)).length;
   host.innerHTML=`
     <section class="home-hero" aria-labelledby="homeTitle">
@@ -924,14 +961,15 @@ function initializeMap(devices){
 }
 function updateStaticMapVisibility(visible){$("#map")?.querySelectorAll("[data-static-id]").forEach(marker=>{marker.style.display=visible.has(marker.dataset.staticId)?"block":"none";});}
 Views.map=function(host){
-  disposeMap();const devices=Store.listDevices();
+  disposeMap();let devices=publicDevices();
   host.innerHTML=`
     <div class="page-head">
-      <div><h1>내 주변 AED 찾기</h1><p>가까운 자동심장충격기 위치와 사용 가능 상태를 확인하세요.</p></div>
+      <div><h1>내 주변 AED 찾기</h1><p>가까운 자동심장충격기 위치와 함께 <b>출입 조건</b>과 <b>관리자가 확인한 상태</b>를 확인하세요. 거리는 모두 직선거리입니다.</p></div>
       <div class="head-actions"><button class="btn" id="locBtn">📍 내 위치</button><button class="btn" data-go="products">📦 제품 사용법</button><button class="btn emergency" id="useBtn">🚨 지금 AED 사용 중</button></div>
     </div>
     <div class="map-layout">
       <div class="aed-list" id="aedList">
+        <div id="recoPanel"></div>
         <div class="filter-panel map-filter">
           <input class="control" id="aedSearch" aria-label="AED 장소, 주소, 모델 검색" placeholder="장소·주소·건물·모델 검색">
           <select class="control" id="mapStatus" aria-label="AED 상태 필터"><option value="">모든 상태</option>${Object.entries(STATUS_DEF).map(([code,x])=>`<option value="${code}">${x.label}</option>`).join("")}</select>
@@ -944,7 +982,18 @@ Views.map=function(host){
   const applyFilters=()=>{const q=$("#aedSearch").value,status=$("#mapStatus").value;_mapFilter={q,status};refreshDbView();const filtered=devices.filter(d=>(!normalizeSearch(q)||deviceSearchText(d).includes(normalizeSearch(q)))&&(!status||deviceStatus(d).code===status));const visible=new Set(filtered.map(d=>d.id));if(_map)Object.entries(_markers).forEach(([id,m])=>{if(visible.has(id)){if(!_map.hasLayer(m))m.addTo(_map);}else if(_map.hasLayer(m))_map.removeLayer(m);});else updateStaticMapVisibility(visible);renderAedItems(filtered);$("#mapCount").textContent=`검색 결과 ${filtered.length}대 / 전체 ${devices.length}대`;};
   ["aedSearch","mapStatus"].forEach(id=>{$("#"+id).addEventListener("input",applyFilters);$("#"+id).addEventListener("change",applyFilters);});
   applyFilters();$("#locBtn").addEventListener("click",locateUser);
+  // 관리자 화면(다른 탭)에서 상태가 바뀌면 지도 마커·목록·추천을 다시 계산
+  _mapLocalRefresh=()=>{
+    if(activeView!=="map")return;devices=publicDevices();
+    if(_map){Object.values(_markers).forEach(m=>{try{_map.removeLayer(m);}catch(e){}});_markers={};validMapDevices(devices).forEach(d=>addDeviceMarker(d));}
+    applyFilters();if(_recoState.ref)runRecommendations(_recoState.ref,false);else renderRecoPanel();
+  };
+  _recoState.search=null;
+  if(_recoState.ref)runRecommendations(_recoState.ref,false);
+  else if(isDemoMode())runRecommendations({...DEMO_REF},true);
+  else renderRecoPanel();
 };
+let _mapLocalRefresh=null;
 function markerColor(level){return level==="danger"?"#e23b53":level==="warn"?"#d98a00":"#14a86a";}
 function addDeviceMarker(d){
   const lat=Number(d.lat),lng=Number(d.lng);if(!Number.isFinite(lat)||!Number.isFinite(lng)||lat===0&&lng===0)return null;
@@ -965,40 +1014,44 @@ function popupHtml(d,st){
   const loc=[d.building,d.floor,d.spot].filter(Boolean).join(" ");
   const srcLabel={manual:"직접 입력",csv:"CSV 등록",public:"공공데이터"}[d.source]||"미확인";
   const field=(label,val)=>`<span style="font-size:12px;color:#48566b">${label}: ${val?esc(val):'<span style="color:#9aa6bb">정보 미확인</span>'}</span><br>`;
-  return `<div style="min-width:180px"><b>${esc(d.name)}</b><br>
+  const acc=accessStatus(d),cond=deviceCondition(d);
+  return `<div style="min-width:200px"><b>${esc(d.name)}</b> ${demoTag(d)}<br>
     <span class="muted" style="font-size:12px">${esc(d.address)}</span><br>
-    <span class="badge ${st.code==="unverified"?"neutral":st.level}" style="margin-top:6px">${esc(st.label)}</span><br>
+    <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">${accessBadge(acc)}${conditionBadge(cond)}</div>
+    <span style="font-size:11px;color:#48566b">${esc(acc.reason)}</span><br>
     ${field("상세 위치",loc)}
-    ${field("운영시간",d.hours)}
-    ${field("출입",d.access)}
+    ${field("운영시간표",hasAccessSchedule(d)?scheduleSummary(d):"")}
+    ${field("출입 메모",[d.access_note,d.hours,d.access].filter(Boolean).join(" · "))}
     <span style="font-size:12px;color:#48566b">최근 점검: ${last?last.date:'<span style="color:#9aa6bb">기록 없음</span>'}</span><br>
-    <span style="font-size:11px;color:#9aa6bb">출처 ${srcLabel} · 상태 기준일 ${st.asOf||"미확인"}</span><br>
+    <span style="font-size:11px;color:#9aa6bb">출처 ${srcLabel} (기관 확인 정보) · 마지막 확인 ${esc(lastConfirmedText(d,cond))}</span><br>
+    <button class="btn sm" type="button" data-open-detail="${esc(d.id)}" style="margin:6px 0 2px">상세·현장 안내</button><br>
     <a href="https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lng}" target="_blank"
       style="color:#2f6bff;font-size:12px;font-weight:700">길찾기(실제 경로) →</a>
     <span style="font-size:10px;color:#9aa6bb;display:block">※ 지도 직선거리와 실제 도보 경로는 다를 수 있습니다.</span></div>`;
 }
 function renderAedItems(list){
   const box=$("#aedItems");if(!box)return;
-  if(!list.length&&!Store.listDevices().length){box.innerHTML=`<div class="db-note">관리 등록된 AED는 아직 없습니다. 아래 공공 AED 목록과 지도를 확인하세요.</div>`;return;}
+  if(!list.length&&!publicDevices().length){box.innerHTML=`<div class="db-note">관리 등록된 AED는 아직 없습니다. 아래 공공 AED 목록과 지도를 확인하세요.</div>`;return;}
   if(!list.length){box.innerHTML=`<div class="empty"><div class="ic">🔍</div><b>결과 없음</b><p>다른 검색어를 입력해 보세요.</p></div>`;return;}
-  box.innerHTML=list.map(d=>{
-    const st=deviceStatus(d);const last=Store.lastInspection(d);
+  box.innerHTML=`<div class="db-head">기관 등록 AED ${list.length}대 <span>기관 확인 정보</span></div>`+list.map(d=>{
+    const st=deviceStatus(d);const last=Store.lastInspection(d);const acc=accessStatus(d),cond=deviceCondition(d);
     return `<div class="aed-item" data-id="${d.id}" tabindex="0" role="button" aria-label="${esc(d.name)} 지도에서 보기">
-      <div class="ai-top"><strong>${esc(d.name)}</strong>${statusBadge(st)}</div>
+      <div class="ai-top"><strong>${esc(d.name)}</strong>${demoTag(d)}${statusBadge(st)}</div>
       <div class="addr">${esc(d.address)}</div>
+      <div class="reco-badges" style="margin-top:6px">${accessBadge(acc)}${conditionBadge(cond)}</div>
       <div class="meta"><span>🔋 배터리 ~${d.battery_expiry||"-"}</span><span>🩹 패드 ~${d.pad_expiry||"-"}</span><span>🕑 점검 ${last?last.date:"없음"}</span></div>
       <button class="btn sm block" data-detail="${d.id}" style="margin-top:9px">상세 정보</button>
     </div>`;}).join("");
   box.querySelectorAll("[data-detail]").forEach(btn=>btn.addEventListener("click",e=>{e.stopPropagation();openDeviceDetail(btn.dataset.detail);}));
   box.querySelectorAll(".aed-item").forEach(it=>{const select=()=>{
-    const d=Store.getDevice(it.dataset.id);if(!d)return;
+    const d=Store.getDevice(it.dataset.id);if(!d||(d.demo&&!isDemoMode()))return;
     if(_map){_map.setView([Number(d.lat),Number(d.lng)],16);_markers[d.id]&&_markers[d.id].openPopup();}
     else{$("#map")?.querySelectorAll("[data-static-id]").forEach(marker=>marker.classList.toggle("active",marker.dataset.staticId===d.id));}
     box.querySelectorAll(".aed-item").forEach(x=>x.classList.remove("active"));it.classList.add("active");
   };it.addEventListener("click",select);it.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select();}});});
 }
 /* ------------------------------------------------------------
-   공공 AED 데이터베이스(Cloudflare D1, SafeMap 62,000건) 레이어
+   공공 AED 데이터베이스(Cloudflare D1, SafeMap 전국 데이터) 레이어 — 건수는 조회한 실제 집계로만 표시
    브라우저는 /api/aeds 만 호출하고, DB 키는 서버(server.py)에만 있습니다.
    ------------------------------------------------------------ */
 const DB_MIN_ZOOM=14,DB_FETCH_LIMIT=2000,DB_LIST_LIMIT=30; // DB_MIN_ZOOM 이상: 개별 위치·상세, 미만: 전국 묶음 표시
@@ -1055,44 +1108,45 @@ function renderDbOverview(inView){
 }
 function distanceMeters(lat1,lng1,lat2,lng2){const R=6371000,toR=x=>x*Math.PI/180,dLat=toR(lat2-lat1),dLng=toR(lng2-lng1);const h=Math.sin(dLat/2)**2+Math.cos(toR(lat1))*Math.cos(toR(lat2))*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));}
 function fmtDist(m){m=Number(m);if(!Number.isFinite(m))return "-";return m<1000?`${Math.round(m)}m`:`${(m/1000).toFixed(1)}km`;}
-async function checkDbConfigured(){
-  if(_dbConfigured===true)return true;
-  try{const r=await fetch("/api/health",{cache:"no-store"});const j=await r.json();_dbConfigured=!!(r.ok&&j.dbConfigured);}catch(e){_dbConfigured=false;}
-  return _dbConfigured;
-}
-function dbCoordKey(lat,lng){return Number(lat).toFixed(4)+","+Number(lng).toFixed(4);}
-/* 검색어·상태 필터 적용 + 관리 등록 기기와 같은 좌표(약 10m 이내)는 중복 표시하지 않음 */
+async function checkDbConfigured(){return (await dbHealth())==="configured";}
+/* 검색어·상태 필터 적용. 관리 등록 기기와의 중복은 '공공데이터 원본 ID' 연결로만 판단한다.
+   (이름·주소·좌표가 비슷하다는 이유로 자동으로 합치지 않음) */
+function linkedPublicIds(){return new Set(publicDevices().map(d=>String(d.public_source_id||"")).filter(Boolean));}
 function dbVisibleItems(){
   const q=normalizeSearch(_mapFilter.q),status=_mapFilter.status;
   if(status&&status!=="unverified")return [];
-  const local=new Set(validMapDevices(Store.listDevices()).map(d=>dbCoordKey(d.lat,d.lng)));
-  return _dbItems.filter(a=>!local.has(dbCoordKey(a.latitude,a.longitude))&&(!q||normalizeSearch([a.name,a.address,a.detail_address,a.sido,a.gugun,a.source_maker,a.source_model].join(" ")).includes(q)));
+  const linked=linkedPublicIds();
+  return _dbItems.filter(a=>!linked.has(String(a.id))&&(!q||normalizeSearch([a.name,a.address,a.detail_address,a.sido,a.gugun,a.source_maker,a.source_model].join(" ")).includes(q)));
 }
 function dbPopupHtml(a){
   const device=[a.source_maker,a.source_model].filter(Boolean).join(" ");
-  const dist=a.distance_m!=null&&Number.isFinite(Number(a.distance_m))?` · ${_dbOriginLabel} 약 ${fmtDist(a.distance_m)}`:"";
-  return `<div style="min-width:190px"><b>${esc(a.name)}</b><br>
+  const dist=a.distance_m!=null&&Number.isFinite(Number(a.distance_m))?` · ${_dbOriginLabel} 직선거리 ${fmtDist(a.distance_m)}`:"";
+  return `<div style="min-width:200px"><b>${esc(a.name)}</b><br>
+    <span style="font-size:10.5px;color:#0f8b8d;font-weight:800">공공데이터 설치 위치 (SafeMap)</span><br>
     <span style="font-size:12px;color:#48566b">${esc(a.address)}</span><br>
     ${a.detail_address?`<span style="font-size:12px;color:#48566b">상세 위치: ${esc(a.detail_address)}</span><br>`:""}
     ${device?`<span style="font-size:12px;color:#48566b">기기: ${esc(device)}</span><br>`:""}
-    <span class="badge neutral" style="margin-top:6px">점검 상태 미확인</span><br>
-    <span style="font-size:11px;color:#9aa6bb">출처 공공데이터(SafeMap) DB${dist}</span><br>
+    <span style="font-size:10.5px;color:#7a879e;font-weight:800;display:block;margin-top:6px">기관 확인 정보</span>
+    <span class="badge neutral">출입: 출입 미확인</span> <span class="badge neutral">기기: 상태 미확인</span><br>
+    <span style="font-size:11px;color:#9aa6bb">기관이 확인한 운영시간·점검 기록이 없습니다.</span><br>
+    <span style="font-size:11px;color:#9aa6bb">출처 공공데이터(SafeMap) DB · 원본 ID ${esc(a.id)}${dist}</span><br>
+    ${adminUnlocked?`<button class="btn sm" data-pub-register="${esc(a.id)}" style="margin:6px 0 2px">원본 ID로 관리 대상 등록</button><br>`:""}
     <a href="https://www.google.com/maps/dir/?api=1&destination=${Number(a.latitude)},${Number(a.longitude)}" target="_blank" rel="noopener"
       style="color:#2f6bff;font-size:12px;font-weight:700">길찾기(실제 경로) →</a>
     <span style="font-size:10px;color:#9aa6bb;display:block">※ 공공데이터 기준 위치이며 실제 설치 상태는 현장에서 확인하세요.</span></div>`;
 }
 function renderDbItems(items,message){
   const box=$("#dbItems");if(!box)return;
-  if(message){box.innerHTML=`<div class="db-head">공공 AED 데이터베이스 <span>SafeMap 62,000건</span></div><div class="db-note">${esc(message)}</div>`;return;}
+  if(message){box.innerHTML=`<div class="db-head">공공 AED 데이터베이스 <span>${esc(dbTotalLabel())}</span></div><div class="db-note">${esc(message)}</div>`;return;}
   const shown=items.slice(0,DB_LIST_LIMIT);
   box.innerHTML=`<div class="db-head">이 지역 공공 AED ${items.length}${_dbTruncated?"+":""}곳 <span>SafeMap DB</span></div>`+
     (shown.length?shown.map(a=>`<div class="aed-item db-item${String(a.id)===String(_dbActiveId)?" active":""}" data-db-id="${esc(a.id)}" tabindex="0" role="button" aria-label="${esc(a.name)} 지도에서 보기">
       <div class="ai-top"><strong>${esc(a.name)}</strong><span class="badge neutral">상태 미확인</span></div>
       <div class="addr">${esc(a.address)}</div>
       ${a.detail_address?`<div class="addr">${esc(a.detail_address)}</div>`:""}
-      ${a.distance_m!=null?`<div class="meta"><span>📏 ${_dbOriginLabel} ${fmtDist(a.distance_m)}</span></div>`:""}
+      ${a.distance_m!=null?`<div class="meta"><span>📏 ${_dbOriginLabel} 직선거리 ${fmtDist(a.distance_m)}</span></div>`:""}
     </div>`).join("")+(items.length>shown.length?`<div class="db-note">가까운 순 ${DB_LIST_LIMIT}곳만 목록에 표시합니다. 나머지는 지도에서 확인하세요.</div>`:"")
-    :`<div class="db-note">이 지역에서 조건에 맞는 공공 AED가 없습니다.</div>`);
+    :`<div class="db-note">${_dbItems.length?"DB 조회 성공 · 검색어·상태 필터에 맞는 공공 AED 0건":"DB 조회 성공 · 이 지도 범위의 공공 AED 0건"}</div>`);
   box.querySelectorAll("[data-db-id]").forEach(it=>{const select=()=>{
     const a=_dbItems.find(x=>String(x.id)===it.dataset.dbId);if(!a)return;_dbActiveId=a.id;
     box.querySelectorAll(".db-item").forEach(x=>x.classList.remove("active"));it.classList.add("active");
@@ -1130,25 +1184,24 @@ async function loadDbAeds(session){
   const seq=++_dbSeq;
   const qs=new URLSearchParams({bbox:[area.getWest(),area.getSouth(),area.getEast(),area.getNorth()].map(v=>v.toFixed(5)).join(","),limit:String(DB_FETCH_LIMIT),lat:origin.lat.toFixed(6),lng:origin.lng.toFixed(6)});
   if(!_dbItems.length)renderDbItems([],"공공 AED 데이터베이스 조회 중…");
-  try{
-    const r=await fetch(`/api/aeds?${qs}`,{cache:"no-store"});const j=await r.json();
-    if(seq!==_dbSeq||session!==_mapSession)return;
-    if(!r.ok)throw new Error(j.message||"조회 실패");
-    _dbItems=Array.isArray(j.items)?j.items:[];_dbTruncated=!!j.truncated;_dbLoadedBounds=area;
-    _dbOriginLabel=origin===_userLoc?"내 위치에서":"지도 중심에서";
-    if(_dbActiveId&&!_dbItems.some(a=>String(a.id)===String(_dbActiveId)))_dbActiveId=null;
-    renderDbLayer();
-  }catch(e){if(seq===_dbSeq)renderDbItems([],`공공 AED 데이터베이스를 불러오지 못했습니다. (${e.message})`);}
+  const res=await fetchDbJson(`/api/aeds?${qs}`);
+  if(seq!==_dbSeq||session!==_mapSession)return;
+  if(res.state!=="ok"){_dbItems=[];_dbLayer.clearLayers();_dbMarkers={};renderDbItems([],res.message);return;}
+  const j=res.data;
+  _dbItems=Array.isArray(j.items)?j.items:[];_dbTruncated=!!j.truncated;_dbLoadedBounds=area;
+  _dbOriginLabel=origin===_userLoc?"내 위치에서":"지도 중심에서";
+  if(_dbActiveId&&!_dbItems.some(a=>String(a.id)===String(_dbActiveId)))_dbActiveId=null;
+  renderDbLayer();
 }
 async function setupDbLayer(session,hasLocal){
-  const ok=await checkDbConfigured();
+  const h=await dbHealth();
   if(!_map||session!==_mapSession)return;
-  if(!ok){renderDbItems([],"공공 AED 데이터베이스가 서버에 연결되어 있지 않습니다. 서버의 .env 설정을 확인하세요.");return;}
+  if(h!=="configured"){renderDbItems([],DB_MSG[h]||DB_MSG.server_error);return;}
   _dbLayer=L.layerGroup().addTo(_map);_dbClusterLayer=L.layerGroup().addTo(_map);
   _map.on("moveend",()=>{clearTimeout(_dbTimer);_dbTimer=setTimeout(()=>loadDbAeds(session),250);});
   loadDbAeds(session);
   loadDbPoints().then(()=>{if(_map&&session===_mapSession)loadDbAeds(session);})
-    .catch(e=>{if(_map&&session===_mapSession&&_map.getZoom()<DB_MIN_ZOOM)renderDbItems([],`전국 공공 AED 위치를 불러오지 못했습니다. (${e.message})`);});
+    .catch(e=>{if(_map&&session===_mapSession&&_map.getZoom()<DB_MIN_ZOOM)renderDbItems([],`DB 조회 실패 — 전국 공공 AED 위치를 불러오지 못했습니다. (${e.message})`);});
 }
 /* 배경지도 제한으로 좌표 지도(오프라인)로 바뀐 경우 안내 */
 function dbStaticFallbackNotice(){
@@ -1166,28 +1219,13 @@ async function fetchNearestDb(lat,lng){
     return items;
   }catch(e){return [];}
 }
+/* '내 위치' 버튼: 위치 권한 거부·시간 초과를 구분해 안내하고, 실패하면 장소 직접 검색으로 유도 */
 function locateUser(){
-  if(!navigator.geolocation){toast("이 브라우저는 위치 기능을 지원하지 않습니다.");return;}
-  toast("위치를 확인하는 중…");
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const{latitude:lat,longitude:lng}=pos.coords;
-    _userLoc=window.L&&typeof L.latLng==="function"?L.latLng(lat,lng):{lat,lng};_dbLoadedBounds=null;
-    if(_map){
-      if(_userMarker)_map.removeLayer(_userMarker);
-      _userMarker=L.circleMarker([lat,lng],{radius:9,color:"#2f6bff",fillColor:"#2f6bff",fillOpacity:.9,weight:3}).addTo(_map);
-      _map.setView([lat,lng],Math.max(DB_MIN_ZOOM+2,_map.getZoom()));
-    }else setMapNotice("현재 위치를 확인했습니다. 배경지도 제한으로 가까운 AED를 목록에서 안내합니다.","warn");
-    // 가장 가까운 AED 안내: 관리 등록 기기 + 공공 AED DB 중 실제 거리(m)가 가장 짧은 곳
-    const devices=validMapDevices(Store.listDevices());
-    let near=null,best=Infinity;
-    devices.forEach(d=>{const dist=distanceMeters(lat,lng,Number(d.lat),Number(d.lng));if(dist<best){best=dist;near={name:d.name,dist};}});
-    fetchNearestDb(lat,lng).then(items=>{
-      const a=items[0];
-      if(a&&Number.isFinite(Number(a.distance_m))&&Number(a.distance_m)<best)near={name:a.name,dist:Number(a.distance_m)};
-      if(near)toast(`가장 가까운 AED: ${near.name} (직선 약 ${fmtDist(near.dist)})`);
-      else toast("주변에서 AED를 찾지 못했습니다. 지도를 이동해 확인하세요.");
-    });
-  },err=>{toast("위치 권한이 거부되었습니다. 지도에서 직접 찾아보세요.");},{enableHighAccuracy:true,timeout:8000});
+  if(!$("#recoPanel")){toast("지도 화면에서 사용할 수 있습니다.");return;}
+  recoUseMyLocation().then(loc=>{
+    if(loc&&!loc.ok){toast(loc.message);if(!_map)setMapNotice(loc.message,"warn");}
+    else if(loc&&loc.ok&&!_map)setMapNotice("현재 위치를 확인했습니다. 배경지도 제한으로 추천 후보를 목록에서 안내합니다.","warn");
+  });
 }
 
 /* ============================================================
@@ -1198,7 +1236,7 @@ function locateUser(){
 function isLikelyPhone(){return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"");}
 
 function openUseModal(){
-  const devices=Store.listDevices();
+  const devices=publicDevices();
   openModal(`
     <div class="modal-head"><h2 style="color:var(--danger)">🚨 응급상황 · AED 사용</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div>
 
@@ -1227,7 +1265,7 @@ function openUseModal(){
     const id=$("#useDevice").value;
     const proceed=(lat,lng)=>{
       let dev=id?Store.getDevice(id):null;
-      if(!dev&&lat!=null){let best=1e9;Store.listDevices().forEach(d=>{const dist=Math.hypot(d.lat-lat,d.lng-lng);if(dist<best){best=dist;dev=d;}});}
+      if(!dev&&lat!=null){let best=Infinity;publicDevices().forEach(d=>{const dist=distanceMeters(lat,lng,Number(d.lat),Number(d.lng));if(dist<best){best=dist;dev=d;}});}
       const ev=Store.addUsageEvent({
         deviceId:dev?dev.id:null,deviceName:dev?dev.name:"위치 미확인",address:dev?dev.address:"",
         lat:lat,lng:lng,
@@ -1258,7 +1296,7 @@ function showUseLogged(ev,dev){
     </div>
     <div class="guide-item">
       <div class="gi-task"><span class="gi-ico">🔁</span><b>후속 조치</b></div>
-      <div style="font-size:12.5px;color:var(--text-2);margin-top:4px">${dev?"이 기기는 '사용 후 점검 필요'로 표시되었습니다. 관리자 대시보드에서 복구 절차를 추적합니다.":"기기를 선택하지 않아 후속 점검 대상이 지정되지 않았습니다."}</div>
+      <div style="font-size:12.5px;color:var(--text-2);margin-top:4px">${dev?"이 기기는 시민 지도에서 '복구 중'으로 표시되고 우선 추천에서 빠집니다. 관리자가 복구 체크리스트를 완료하면 다시 평가합니다.":"기기를 선택하지 않아 후속 점검 대상이 지정되지 않았습니다."}</div>
     </div>
     <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;text-align:center">
       <p style="font-size:14px;font-weight:700;margin-bottom:6px">지금 해야 할 일</p>
@@ -1277,7 +1315,7 @@ window.openUseModal=openUseModal;
    각 AED가 최근에 점검됐는지 시민이 믿고 쓸 수 있게 보여준다.
    ============================================================ */
 Views.status=function(host){
-  const devices=Store.listDevices();
+  const devices=publicDevices();
   const stat={ok:0,warn:0,danger:0};
   devices.forEach(d=>stat[deviceStatus(d).level]++);
   const sorted=devices.slice().sort((a,b)=>{
@@ -1302,10 +1340,11 @@ Views.status=function(host){
       <div class="page-head" style="margin-bottom:12px"><div><h1 style="font-size:16px">기기별 점검 상태</h1></div>
         <span class="muted" style="font-size:12px">기준일 ${todayStr()}</span></div>
       <div class="table-wrap"><table class="table"><thead><tr>
-        <th>설치 장소</th><th>상태</th><th>최근 점검일</th><th>배터리</th><th>패드</th></tr></thead><tbody>
+        <th>설치 장소</th><th>출입 / 기기</th><th>관리 상태</th><th>최근 점검일</th><th>배터리</th><th>패드</th></tr></thead><tbody>
         ${sorted.map(d=>{const st=deviceStatus(d);const last=Store.lastInspection(d);
           return `<tr>
-            <td><strong>${esc(d.name)}</strong><br><span class="muted" style="font-size:11px">${esc(d.address)}</span></td>
+            <td><strong>${esc(d.name)}</strong> ${demoTag(d)}<br><span class="muted" style="font-size:11px">${esc(d.address)}</span></td>
+            <td><div class="reco-badges">${accessBadge(accessStatus(d))}${conditionBadge(deviceCondition(d))}</div></td>
             <td>${statusBadge(st,st.code==="normal"?"사용 가능":st.label)}</td>
             <td>${last?`${last.date}<br><span class="muted" style="font-size:11px">${daysBetween(last.date,todayStr())}일 전</span>`:`<span class="muted">기록 없음</span>`}</td>
             <td>${citizenExpiry(d.battery_expiry)}</td>
@@ -1627,7 +1666,8 @@ Views.recovery=function(host){
   const events=_recoveryFilter==="all"?all:all.filter(e=>(_recoveryFilter==="done")===(e.recovery==="done"));
   host.innerHTML=`
     <div class="page-head"><div><h1>사용 후 복구</h1><p>AED 사용 기록의 패드·배터리·자가점검·재배치·재사용 준비를 확인합니다.</p></div><div class="head-actions"><button class="btn" id="usageExport">⬇ 사용이력 CSV</button><button class="btn solid" id="adminUsageAdd">+ 사용 기록 등록</button></div></div>
-    <div class="notice-box" style="margin-bottom:14px"><b>알림 연동 상태:</b> 시민의 사용 기록은 현재 브라우저에만 저장됩니다. 관리자 문자·푸시 등 실제 알림 전송은 <b>미연동</b>입니다.</div>
+    <div class="notice-box" style="margin-bottom:14px"><b>알림 연동 상태:</b> 시민의 사용 기록은 현재 브라우저에만 저장됩니다. 관리자 문자·푸시 등 실제 알림 전송은 <b>미연동</b>입니다. 사용 기록이 있는 기기는 시민 지도에서 <b>'복구 중'</b>으로 표시되어 우선 추천에서 빠지고, 복구 체크리스트를 완료하면 출입 조건 등을 다시 평가합니다.</div>
+    ${opModeWriteNotice()}
     <div class="filter-row">
       <button class="filter-chip ${_recoveryFilter==="pending"?"on":""}" data-rf="pending">점검 필요 ${counts.pending}</button>
       <button class="filter-chip ${_recoveryFilter==="done"?"on":""}" data-rf="done">복구 완료 ${counts.done}</button>
@@ -1661,7 +1701,7 @@ function openRecoveryModal(eventId){
     openModal(`<div class="modal-head"><h2>✅ 복구 완료 내역</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div><div class="detail-grid"><div class="detail-cell"><small>기기</small><b>${esc(e.deviceName||"기기 미지정")}</b></div><div class="detail-cell"><small>완료 일시</small><b>${fmtTs(e.recoveredAt)}</b></div><div class="detail-cell"><small>담당자</small><b>${esc(e.recoveredBy||"-")}</b></div><div class="detail-cell"><small>완료 항목</small><b>${esc(checked.join(", ")||"-")}</b></div></div><div class="gi-lbl">메모</div><p style="font-size:13px">${esc(e.recoveryMemo||"메모 없음")}</p>${e.recoveryPhoto?`<img src="${e.recoveryPhoto}" alt="복구 증빙 사진" style="width:100%;max-height:280px;object-fit:contain;border-radius:10px;margin-top:12px">`:""}`);return;
   }
   openModal(`<div class="modal-head"><h2>🔁 사용 후 복구 완료</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div><p style="font-size:13px;margin-bottom:10px"><b>${esc(e.deviceName||"기기 미지정")}</b> · ${fmtTs(e.ts)}</p><p class="muted" style="font-size:11px;margin-bottom:10px">실제 관리자 알림 전송 완료를 의미하지 않습니다. 현장 복구 사항을 확인해 기록합니다.</p><form id="recoveryForm"><div class="check-grid">${RECOVERY_CHECKS.map(([key,label])=>`<label class="check-item"><input type="checkbox" name="${key}" required><span><b>${label}</b><br><small class="muted">현장에서 확인 완료</small></span></label>`).join("")}</div><div class="field"><label>담당자 *</label><input class="control" name="by" required placeholder="이름 또는 부서"></div><div class="field"><label>메모</label><textarea class="control" name="memo" rows="3" placeholder="교체 부품, 자가점검 결과 등"></textarea></div><div class="field"><label>증빙 사진 (선택, 이미지 5MB 이하)</label><input class="control" type="file" name="photo" accept="image/*"></div><button class="btn solid block" type="submit">모든 항목 확인 · 복구 완료</button></form>`);
-  $("#recoveryForm").addEventListener("submit",async ev=>{ev.preventDefault();const f=new FormData(ev.currentTarget);let photo=null;const file=f.get("photo");if(file&&file.size){try{photo=await fileToDataUrl(file);}catch(err){toast(err.message||"사진 처리 실패");return;}}const checks={};RECOVERY_CHECKS.forEach(([key])=>checks[key]=f.get(key)==="on");if(Object.values(checks).some(v=>!v)){toast("모든 복구 항목을 확인하세요.");return;}try{Store.completeRecovery(eventId,{by:f.get("by"),memo:f.get("memo"),checks,photo});closeModal();toast("사용 후 복구를 완료하고 연결 작업을 닫았습니다.");go("recovery");}catch(err){toast(err.message||"복구 저장 실패");}});
+  $("#recoveryForm").addEventListener("submit",async ev=>{ev.preventDefault();const f=new FormData(ev.currentTarget);let photo=null;const file=f.get("photo");if(file&&file.size){try{photo=await fileToDataUrl(file);}catch(err){toast(err.message||"사진 처리 실패");return;}}const checks={};RECOVERY_CHECKS.forEach(([key])=>checks[key]=f.get(key)==="on");if(Object.values(checks).some(v=>!v)){toast("모든 복구 항목을 확인하세요.");return;}try{Store.completeRecovery(eventId,{by:f.get("by"),memo:f.get("memo"),checks,photo});closeModal();const re=e.deviceId?reevaluateDeviceText(e.deviceId):"";toast(`사용 후 복구 완료.${re?" "+re:""}`);go("recovery");if(re)setTimeout(()=>{const box=$("#view .page-head");if(box)box.insertAdjacentHTML("afterend",`<div class="notice-box" style="margin-bottom:12px" role="status"><b>추천 후보 재평가</b> · ${esc(re)}</div>`);},0);}catch(err){toast(err.message||"복구 저장 실패");}});
 }
 function openEventsModal(){go("recovery");}
 window.openEventsModal=openEventsModal;window.openRecoveryModal=openRecoveryModal;
@@ -1680,12 +1720,12 @@ Views.devices=function(host){
       <select class="control" id="deviceModel" aria-label="모델 필터"><option value="">모든 모델</option>${PRODUCTS.map(p=>`<option value="${p.id}" ${_deviceFilters.model===p.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
       <select class="control" id="deviceStatus" aria-label="상태 필터"><option value="">모든 상태</option>${Object.entries(STATUS_DEF).map(([code,x])=>`<option value="${code}" ${_deviceFilters.status===code?"selected":""}>${x.label}</option>`).join("")}</select>
       <select class="control" id="deviceSource" aria-label="출처 필터"><option value="">모든 출처</option><option value="manual" ${_deviceFilters.source==="manual"?"selected":""}>직접 입력</option><option value="csv" ${_deviceFilters.source==="csv"?"selected":""}>CSV 등록</option></select>
-    </div><div class="filter-row">${chips}</div><div class="filter-summary" id="deviceCount"></div><div class="card pad" id="deviceResults"></div>`;
+    </div><div class="filter-row">${chips}</div>${opModeWriteNotice()}<div class="filter-summary" id="deviceCount"></div><div class="card pad" id="deviceResults"></div>`;
   const renderResults=()=>{
     const devices=devicesByUrgency(all.filter(d=>(!normalizeSearch(_deviceFilters.query)||deviceSearchText(d).includes(normalizeSearch(_deviceFilters.query)))&&(!_deviceFilters.model||d.model===_deviceFilters.model)&&(!_deviceFilters.status||deviceStatus(d).code===_deviceFilters.status)&&(!_deviceFilters.source||d.source===_deviceFilters.source)));
     host.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("on",b.dataset.filter===_deviceFilters.model));
     $("#deviceCount").textContent=`검색 결과 ${devices.length}대 / 전체 ${all.length}대 · 시급순`;
-    $("#deviceResults").innerHTML=devices.length?`<div class="table-wrap"><table class="table"><thead><tr><th>기기</th><th>모델</th><th>위치</th><th>배터리 만료</th><th>패드 만료</th><th>다음 점검</th><th>상태</th><th></th></tr></thead><tbody>${devices.map(d=>{const st=deviceStatus(d);return `<tr><td><strong>${esc(d.name)}</strong><br><span class="mono muted" style="font-size:11px">${d.id}</span></td><td><span class="model-tag" style="--mc:${PRODUCT_MAP[d.model]?PRODUCT_MAP[d.model].color:"#7a879e"}">${esc(productName(d.model))}</span></td><td>${esc(d.address)}<br><span class="muted" style="font-size:11px">${esc(d.manager)} ${esc(d.phone)}</span></td><td>${expiryCell(d.battery_expiry)}</td><td>${expiryCell(d.pad_expiry)}</td><td>${Store.nextInspectionDate(d)}</td><td>${statusBadge(st)}</td><td style="white-space:nowrap"><button class="btn sm" data-detail="${d.id}">상세</button><button class="btn sm" data-guide-btn="${d.id}">조치</button><button class="btn sm" data-inspect="${d.id}">점검</button><button class="btn sm" data-edit="${d.id}">수정</button><button class="btn sm ghost" data-del="${d.id}" style="color:var(--danger)">삭제</button></td></tr>`;}).join("")}</tbody></table></div>`:`<div class="empty"><div class="ic">🔍</div><b>조건에 맞는 기기가 없습니다</b><p>검색어나 필터를 변경하세요.</p></div>`;
+    $("#deviceResults").innerHTML=devices.length?`<div class="table-wrap"><table class="table"><thead><tr><th>기기</th><th>모델</th><th>위치</th><th>배터리 만료</th><th>패드 만료</th><th>다음 점검</th><th>상태</th><th></th></tr></thead><tbody>${devices.map(d=>{const st=deviceStatus(d);return `<tr><td><strong>${esc(d.name)}</strong> ${demoTag(d)}<br><span class="mono muted" style="font-size:11px">${d.id}</span><div class="reco-badges" style="margin-top:4px">${accessBadge(accessStatus(d))}${conditionBadge(deviceCondition(d))}</div></td><td><span class="model-tag" style="--mc:${PRODUCT_MAP[d.model]?PRODUCT_MAP[d.model].color:"#7a879e"}">${esc(productName(d.model))}</span></td><td>${esc(d.address)}<br><span class="muted" style="font-size:11px">${esc(d.manager)} ${esc(d.phone)}</span></td><td>${expiryCell(d.battery_expiry)}</td><td>${expiryCell(d.pad_expiry)}</td><td>${Store.nextInspectionDate(d)}</td><td>${statusBadge(st)}</td><td style="white-space:nowrap"><button class="btn sm" data-detail="${d.id}">상세</button><button class="btn sm" data-guide-btn="${d.id}">조치</button><button class="btn sm" data-inspect="${d.id}">점검</button><button class="btn sm" data-edit="${d.id}">수정</button><button class="btn sm ghost" data-del="${d.id}" style="color:var(--danger)">삭제</button></td></tr>`;}).join("")}</tbody></table></div>`:`<div class="empty"><div class="ic">🔍</div><b>조건에 맞는 기기가 없습니다</b><p>검색어나 필터를 변경하세요.</p></div>`;
     const box=$("#deviceResults");box.querySelectorAll("[data-detail]").forEach(b=>b.addEventListener("click",()=>openDeviceDetail(b.dataset.detail)));box.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openDeviceModal(b.dataset.edit)));box.querySelectorAll("[data-inspect]").forEach(b=>b.addEventListener("click",()=>openInspectModal(b.dataset.inspect)));box.querySelectorAll("[data-guide-btn]").forEach(b=>b.addEventListener("click",()=>openActionGuide(b.dataset.guideBtn)));box.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{const d=Store.getDevice(b.dataset.del);if(d&&confirm(`'${d.name}' 기기를 삭제할까요? 점검 이력도 함께 삭제됩니다.`)){Store.removeDevice(b.dataset.del);toast("삭제했습니다.");go("devices");}}));
   };
   $("#addBtn").addEventListener("click",()=>openDeviceModal(null));$("#csvBtn").addEventListener("click",openCsvHelp);
@@ -1707,54 +1747,98 @@ function openDeviceDetail(id){
   const events=Store.listEvents().filter(e=>e.deviceId===id).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
   const sourceLabel={manual:"직접 입력",csv:"CSV 등록",public:"공공데이터"}[d.source]||d.source||"미확인";
   openModal(`<div class="modal-head"><h2>♥ AED 상세 정보</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px"><div><strong style="font-size:17px">${esc(d.name)}</strong><div class="mono muted" style="font-size:10px">${esc(d.id)}</div></div>${statusBadge(st)}</div>
-    <div class="detail-grid"><div class="detail-cell"><small>주소</small><b>${esc(d.address)||"미확인"}</b></div><div class="detail-cell"><small>상세 설치 위치</small><b>${esc([d.building,d.floor,d.spot].filter(Boolean).join(" "))||"미확인"}</b></div><div class="detail-cell"><small>모델</small><b>${esc(productName(d.model))}</b></div><div class="detail-cell"><small>운영·출입</small><b>${esc([d.hours,d.access].filter(Boolean).join(" · "))||"미확인"}</b></div><div class="detail-cell"><small>담당자</small><b>${esc([d.manager,d.phone].filter(Boolean).join(" · "))||"미확인"}</b></div><div class="detail-cell"><small>출처</small><b>${esc(sourceLabel)}${d.source_maker||d.source_model?` · ${esc([d.source_maker,d.source_model].filter(Boolean).join(" "))}`:""}</b></div><div class="detail-cell"><small>최근 점검</small><b>${last?`${last.date} · ${esc(last.result)}`:"기록 없음"}</b></div><div class="detail-cell"><small>다음 점검 예정</small><b>${next}</b></div></div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px"><div><strong style="font-size:17px">${esc(d.name)}</strong> ${demoTag(d)}<div class="mono muted" style="font-size:10px">${esc(d.id)}</div></div>${statusBadge(st)}</div>
+    ${detailAccessSections(d)}
+    <div class="detail-grid"><div class="detail-cell"><small>주소</small><b>${esc(d.address)||"미확인"}</b></div><div class="detail-cell"><small>상세 설치 위치</small><b>${esc([d.building,d.floor,d.spot].filter(Boolean).join(" "))||"미확인"}</b></div><div class="detail-cell"><small>모델</small><b>${esc(productName(d.model))}</b></div><div class="detail-cell"><small>운영·출입 메모 (자유 입력)</small><b>${esc([d.access_note,d.hours,d.access].filter(Boolean).join(" · "))||"미확인"}</b></div><div class="detail-cell"><small>담당자</small><b>${esc([d.manager,d.phone].filter(Boolean).join(" · "))||"미확인"}</b></div><div class="detail-cell"><small>출처</small><b>${esc(sourceLabel)}${d.source_maker||d.source_model?` · ${esc([d.source_maker,d.source_model].filter(Boolean).join(" "))}`:""}</b></div><div class="detail-cell"><small>최근 점검</small><b>${last?`${last.date} · ${esc(last.result)}`:"기록 없음"}</b></div><div class="detail-cell"><small>다음 점검 예정</small><b>${next}</b></div></div>
     <div class="gi-lbl">상태 근거 · 기준일 ${esc(st.asOf||"미확인")}</div><div class="guide-item ${st.level==="danger"?"urgent":""}"><b>${esc(st.label)}</b><ul class="gi-prep" style="margin-top:6px">${st.reasons.length?st.reasons.map(r=>`<li>• ${esc(r)}</li>`).join(""):`<li>• ${esc(st.basis)} 기준 정상 범위</li>`}</ul></div>
     <div class="gi-lbl">점검 타임라인 (${inspections.length})</div><div class="timeline">${inspections.length?inspections.map(i=>`<div class="tl-item"><time>${esc(i.date)}</time><h5>${esc(i.result)} · ${esc(i.inspector||"점검자 미기입")}</h5>${i.memo?`<p>${esc(i.memo)}</p>`:""}</div>`).join(""):`<p class="muted" style="font-size:12px">점검 기록 없음</p>`}</div>
     <div class="gi-lbl">연결 조치작업 (${tasks.length})</div>${tasks.length?tasks.map(t=>`<div class="guide-item"><div class="gi-task"><b>${esc(t.title)}</b><span class="badge ${t.status==="완료"?"ok":"warn"}">${esc(t.status)}</span></div><div class="muted" style="font-size:11px;margin-top:4px">${esc(t.reason||"")} · 담당 ${esc(t.assignee||"미지정")}</div></div>`).join(""):`<p class="muted" style="font-size:12px">연결된 작업 없음</p>`}
     <div class="gi-lbl">사용 / 복구 이벤트 (${events.length})</div>${events.length?events.map(e=>`<div class="guide-item ${e.recovery==="done"?"":"urgent"}"><div class="gi-task"><b>${fmtTs(e.ts)}</b><span class="badge ${e.recovery==="done"?"ok":"danger"}">${e.recovery==="done"?"복구 완료":"점검 필요"}</span></div>${e.recoveredAt?`<div class="muted" style="font-size:11px">${fmtTs(e.recoveredAt)} · ${esc(e.recoveredBy||"")}</div>`:""}</div>`).join(""):`<p class="muted" style="font-size:12px">사용 기록 없음</p>`}
-    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:14px"><button class="btn" data-detail-product>📦 제품 사용법</button>${adminUnlocked?`<button class="btn" data-detail-edit>수정</button><button class="btn" data-detail-inspect>점검</button><button class="btn solid" data-detail-guide>조치 안내</button>`:""}</div>`);
-  const modal=$("#modal");const product=modal.querySelector("[data-detail-product]");if(product)product.addEventListener("click",()=>{if(d.model&&PRODUCT_MAP[d.model])openProductGuide(d.model);else toast("연결된 제품 정보가 없습니다.");});const edit=modal.querySelector("[data-detail-edit]");if(edit)edit.addEventListener("click",()=>openDeviceModal(id));const inspect=modal.querySelector("[data-detail-inspect]");if(inspect)inspect.addEventListener("click",()=>openInspectModal(id));const guide=modal.querySelector("[data-detail-guide]");if(guide)guide.addEventListener("click",()=>openActionGuide(id));
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:14px"><button class="btn" data-detail-product>📦 제품 사용법</button><button class="btn" data-detail-report>📮 현장 제보</button>${adminUnlocked?`<button class="btn" data-detail-edit>수정</button><button class="btn" data-detail-inspect>점검</button><button class="btn solid" data-detail-guide>조치 안내</button><button class="btn" data-detail-qr>🔗 보관함 QR 링크</button>`:""}</div>`);
+  const modal=$("#modal");
+  const rep=modal.querySelector("[data-detail-report]");if(rep)rep.addEventListener("click",()=>openReportModal(id));
+  const qr=modal.querySelector("[data-detail-qr]");if(qr)qr.addEventListener("click",()=>{const base=`${location.origin}${location.pathname}?device=${encodeURIComponent(id)}`;const text=`상세: ${base}\n제보: ${base}&report=1`;(navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(()=>toast("보관함 QR용 링크 2개를 복사했습니다. QR 생성기에 붙여 넣으세요."),()=>prompt("보관함 QR용 링크",text));});
+  fillPublicSourceSection(d);const product=modal.querySelector("[data-detail-product]");if(product)product.addEventListener("click",()=>{if(d.model&&PRODUCT_MAP[d.model])openProductGuide(d.model);else toast("연결된 제품 정보가 없습니다.");});const edit=modal.querySelector("[data-detail-edit]");if(edit)edit.addEventListener("click",()=>openDeviceModal(id));const inspect=modal.querySelector("[data-detail-inspect]");if(inspect)inspect.addEventListener("click",()=>openInspectModal(id));const guide=modal.querySelector("[data-detail-guide]");if(guide)guide.addEventListener("click",()=>openActionGuide(id));
 }
 window.openDeviceDetail=openDeviceDetail;
 
-function openDeviceModal(id){
-  const d=id?Store.getDevice(id):null;
+function openDeviceModal(id,prefill){
+  const d=id?Store.getDevice(id):null,s=d||prefill||{},sch=(d&&d.access_schedule)||{};
+  const val=k=>esc(s[k]==null?"":s[k]);
   openModal(`
     <div class="modal-head"><h2>${d?"기기 수정":"AED 등록"}</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div>
+    ${isDemoMode()?'<div class="demo-banner" style="margin-bottom:10px">🧪 시연 모드에서 등록·수정한 기기는 <b>시연용</b>으로 표시되고 운영 데이터와 분리 저장됩니다.</div>':""}
     <form id="deviceForm">
-      <div class="field"><label>설치 장소명 *</label><input class="control" name="name" required value="${d?esc(d.name):""}" placeholder="예: 조선이공대 본관 1층 로비"></div>
-      <div class="field"><label>주소 *</label><input class="control" name="address" required value="${d?esc(d.address):""}" placeholder="광주 동구 ..."></div>
+      <div class="field"><label>설치 장소명 *</label><input class="control" name="name" required value="${val("name")}" placeholder="예: 조선이공대 본관 1층 로비"></div>
+      <div class="field"><label>주소 *</label><input class="control" name="address" required value="${val("address")}" placeholder="광주 동구 ..."></div>
       <div class="field"><label>제품 모델 *</label>
         <select class="control" name="model" required>
           <option value="">모델 선택</option>
-          ${PRODUCTS.map(p=>`<option value="${p.id}" ${d&&d.model===p.id?"selected":""}>${esc(p.name)}</option>`).join("")}
+          ${PRODUCTS.map(p=>`<option value="${p.id}" ${s.model===p.id?"selected":""}>${esc(p.name)}</option>`).join("")}
         </select></div>
+      <div class="gi-lbl">설치 위치 · 현장 안내 (출입구 → 건물/층 → 보관함 위치)</div>
       <div class="form-grid">
-        <div class="field"><label>건물명</label><input class="control" name="building" value="${d?esc(d.building||""):""}" placeholder="예: 본관"></div>
-        <div class="field"><label>층수</label><input class="control" name="floor" value="${d?esc(d.floor||""):""}" placeholder="예: 1층"></div>
-        <div class="field wide"><label>상세 설치 위치</label><input class="control" name="spot" value="${d?esc(d.spot||""):""}" placeholder="예: 로비 안내데스크 옆 벽면"></div>
-        <div class="field"><label>운영시간</label><input class="control" name="hours" value="${d?esc(d.hours||""):""}" placeholder="예: 평일 09-18시 / 미확인"></div>
-        <div class="field"><label>출입 가능 여부</label><input class="control" name="access" value="${d?esc(d.access||""):""}" placeholder="예: 24시간 개방 / 미확인"></div>
-        <div class="field"><label>위도(lat) *</label><input class="control" name="lat" required value="${d?d.lat:""}" placeholder="33~39"></div>
-        <div class="field"><label>경도(lng) *</label><input class="control" name="lng" required value="${d?d.lng:""}" placeholder="124~132"></div>
-        <div class="field"><label>담당자</label><input class="control" name="manager" value="${d?esc(d.manager):""}"></div>
-        <div class="field"><label>연락처</label><input class="control" name="phone" value="${d?esc(d.phone):""}"></div>
-        <div class="field"><label>배터리 만료일</label><input class="control" type="date" name="battery_expiry" value="${d?d.battery_expiry:""}"></div>
-        <div class="field"><label>패드 만료일</label><input class="control" type="date" name="pad_expiry" value="${d?d.pad_expiry:""}"></div>
-        <div class="field"><label>설치일</label><input class="control" type="date" name="install_date" value="${d?d.install_date:todayStr()}"></div>
+        <div class="field wide"><label>① 출입구</label><input class="control" name="route_entrance" value="${val("route_entrance")}" placeholder="예: 정문 경비실 옆 출입구"></div>
+        <div class="field"><label>② 건물명</label><input class="control" name="building" value="${val("building")}" placeholder="예: 본관"></div>
+        <div class="field"><label>② 층수</label><input class="control" name="floor" value="${val("floor")}" placeholder="예: 1층 로비"></div>
+        <div class="field wide"><label>③ 보관함 위치</label><input class="control" name="spot" value="${val("spot")}" placeholder="예: 엘리베이터 오른쪽 벽면"></div>
+        <div class="field"><label>위도(lat) *</label><input class="control" name="lat" required value="${val("lat")}" placeholder="33~39"></div>
+        <div class="field"><label>경도(lng) *</label><input class="control" name="lng" required value="${val("lng")}" placeholder="124~132"></div>
+      </div>
+      <div class="gi-lbl">기관 확인 출입 정보 <span class="muted" style="font-weight:600">(Asia/Seoul 기준 · 비우면 '출입 미확인')</span></div>
+      <p class="muted" style="font-size:11px;margin-bottom:6px">형식: <code>09:00-18:00</code> · 여러 구간 <code>09:00-12:00, 13:00-18:00</code> · 자정 넘김 <code>22:00-06:00</code> · <code>24시간</code> · <code>휴무</code>. 공휴일 날짜는 운영 설정의 '기관 휴일'에서 관리합니다.</p>
+      <div class="sched-grid">${SCHEDULE_KEYS.map(k=>`<div class="field"><label>${DAY_LABEL[k]}</label><input class="control" name="sched_${k}" value="${esc(sch[k]||"")}" placeholder="미확인"></div>`).join("")}</div>
+      <div class="field"><label>예외일 (한 줄에 하나: <code>YYYY-MM-DD 휴무</code> 또는 <code>YYYY-MM-DD 10:00-14:00</code>)</label><textarea class="control" name="access_exceptions" rows="2" placeholder="2026-12-25 휴무">${val("access_exceptions")}</textarea></div>
+      <div class="form-grid">
+        <div class="field wide"><label>출입 메모</label><input class="control" name="access_note" value="${val("access_note")}" placeholder="예: 야간에는 경비실 호출 후 출입"></div>
+        <div class="field"><label>출입 정보 확인자</label><input class="control" name="access_confirmed_by" value="${val("access_confirmed_by")}" placeholder="이름 또는 부서"></div>
+        <div class="field"><label>마지막 출입 확인</label><input class="control" value="${d&&d.access_confirmed_at?esc(fmtSeoul(d.access_confirmed_at)):"기록 없음"}" disabled></div>
+      </div>
+      <label class="check-item" style="margin-bottom:10px"><input type="checkbox" name="confirm_access_now"><span><b>방금 현장에서 출입 조건을 확인했습니다</b><br><small class="muted">저장 시 확인 시각을 기록합니다. 승인된 '문이 잠김' 제보는 이 확인 이후 해제됩니다.</small></span></label>
+      <div class="gi-lbl">공공데이터 연결 (선택)</div>
+      <div class="field"><label>공공데이터 원본 ID (SafeMap objt_id) — 정확히 일치할 때만 연결</label><div style="display:flex;gap:6px"><input class="control" name="public_source_id" value="${val("public_source_id")}" placeholder="비우면 연결하지 않음"><button class="btn" type="button" id="checkPublicId">확인</button></div><div class="muted" id="publicIdResult" style="font-size:11px;margin-top:4px">이름이나 주소가 비슷하다는 이유로 자동 연결하지 않습니다.</div></div>
+      <div class="gi-lbl">관리 정보</div>
+      <div class="form-grid">
+        <div class="field"><label>운영시간 메모(기존)</label><input class="control" name="hours" value="${val("hours")}" placeholder="자유 입력 · 판정에는 위 시간표만 사용"></div>
+        <div class="field"><label>출입 메모(기존)</label><input class="control" name="access" value="${val("access")}" placeholder="자유 입력"></div>
+        <div class="field"><label>담당자</label><input class="control" name="manager" value="${val("manager")}"></div>
+        <div class="field"><label>연락처</label><input class="control" name="phone" value="${val("phone")}"></div>
+        <div class="field"><label>배터리 만료일</label><input class="control" type="date" name="battery_expiry" value="${val("battery_expiry")}"></div>
+        <div class="field"><label>패드 만료일</label><input class="control" type="date" name="pad_expiry" value="${val("pad_expiry")}"></div>
+        <div class="field"><label>설치일</label><input class="control" type="date" name="install_date" value="${d?esc(d.install_date):todayStr()}"></div>
         <div class="field"><label>점검 주기(일)</label><input class="control" type="number" name="inspect_cycle_days" min="1" value="${d?d.inspect_cycle_days:180}"></div>
       </div>
-      <p class="muted" style="font-size:11px;margin-bottom:10px">💡 운영시간·출입 여부 등 확인되지 않은 항목은 '미확인'으로 두세요. 좌표는 대한민국 범위(위도 33~39, 경도 124~132)만 허용됩니다.</p>
+      <p class="muted" style="font-size:11px;margin-bottom:10px">💡 확인되지 않은 항목은 비워 두세요. 좌표는 대한민국 범위(위도 33~39, 경도 124~132)만 허용됩니다.</p>
       <button class="btn solid block" type="submit">${d?"수정 저장":"등록"}</button>
     </form>`);
-  $("#deviceForm").addEventListener("submit",e=>{
+  const form=$("#deviceForm"),resultBox=$("#publicIdResult");
+  async function verifyPublicId(pid){
+    const res=await fetchDbJson(`/api/aeds/item?id=${encodeURIComponent(pid)}`);
+    if(res.state==="ok"&&res.data.item)return {ok:true,item:res.data.item};
+    if(res.state==="error"&&res.status===404)return {ok:false,message:"DB에 해당 공공데이터 원본 ID가 없습니다. 연결하지 않았습니다."};
+    return {ok:false,message:`${res.message} — 원본 ID를 확인하지 못해 연결하지 않았습니다. 연결 없이 저장하려면 칸을 비우세요.`};
+  }
+  $("#checkPublicId").addEventListener("click",async()=>{const pid=String(form.public_source_id.value||"").trim();if(!pid){resultBox.textContent="원본 ID를 입력하세요.";return;}resultBox.textContent="확인 중…";const v=await verifyPublicId(pid);resultBox.innerHTML=v.ok?`<span style="color:var(--ok)">✓ 일치: <b>${esc(v.item.name)}</b> · ${esc(v.item.address)}</span>`:`<span style="color:var(--danger)">${esc(v.message)}</span>`;});
+  form.addEventListener("submit",async e=>{
     e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
     const err=validateCoords(f.lat,f.lng);
     if(err){toast(err);return;}
-    if(d)Store.updateDevice(d.id,{...f,lat:+f.lat,lng:+f.lng,inspect_cycle_days:+f.inspect_cycle_days});
-    else Store.addDevice({...f,source:"manual"});
-    closeModal();toast(d?"기기 정보를 수정했습니다.":"새 AED를 등록했습니다.");go("devices");
+    const schedule={},bad=[];SCHEDULE_KEYS.forEach(k=>{schedule[k]=String(f["sched_"+k]||"").trim();delete f["sched_"+k];if(schedule[k]&&parseDayRule(schedule[k]).kind==="invalid")bad.push(`${DAY_LABEL[k]}: ${schedule[k]}`);});
+    if(bad.length){toast(`운영시간 형식을 확인하세요 — ${bad.join(" / ")}`);return;}
+    const ex=parseAccessExceptions(f.access_exceptions);if(ex.errors.length){toast(`예외일 형식 오류 — ${ex.errors[0]}`);return;}
+    const confirmNow=f.confirm_access_now==="on";delete f.confirm_access_now;
+    const pid=String(f.public_source_id||"").trim();f.public_source_id=pid;
+    if(pid&&(!d||d.public_source_id!==pid)){
+      const dup=publicDevices().find(x=>x.public_source_id===pid&&(!d||x.id!==d.id));if(dup){toast(`이 원본 ID는 이미 '${dup.name}'에 연결되어 있습니다.`);return;}
+      resultBox.textContent="원본 ID 확인 중…";const v=await verifyPublicId(pid);
+      if(!v.ok){resultBox.innerHTML=`<span style="color:var(--danger)">${esc(v.message)}</span>`;toast(v.message);return;}
+      f.public_link_checked_at=new Date().toISOString();
+    }
+    const patch={...f,access_schedule:schedule,lat:+f.lat,lng:+f.lng,inspect_cycle_days:+f.inspect_cycle_days};
+    if(confirmNow)patch.access_confirmed_at=new Date().toISOString();
+    if(d)Store.updateDevice(d.id,patch);
+    else Store.addDevice({...patch,source:"manual"});
+    closeModal();toast(d?"기기 정보를 수정했습니다. 추천 판정에 바로 반영됩니다.":"새 AED를 등록했습니다.");go("devices");
   });
 }
 /* 좌표 유효성 검사 — 대한민국 범위 */
@@ -2086,7 +2170,7 @@ function exportAllDevicesCsv(){
   downloadCsv(rows,`AED전체현황_${todayStr()}.csv`);toast(`전체 기기 ${rows.length-1}대를 내보냈습니다.`);
 }
 /* 시드(예시) 데이터 포함 여부 — 보고서 '시연 데이터' 표기용 */
-function hasSeedData(){return Store.listDevices().some(d=>SEED.some(s=>s.id===d.id));}
+function hasSeedData(){return isDemoMode()||Store.listDevices().some(d=>d.demo||SEED.some(s=>s.id===d.id));}
 
 /* ============================================================
    VIEW: 데이터 연동 (관리자) — 공공 AED는 Cloudflare D1에서만 조회
@@ -2154,11 +2238,20 @@ Views.settings=function(host){
   if(!adminUnlocked){go("settings");return;}const s=Store.getSettings();
   host.innerHTML=`<div class="page-head"><div><h1>운영 설정 · 백업</h1><p>기관 표시와 사전알림 기준, 월 점검 목표를 관리합니다.</p></div></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-      <section class="card pad"><h2 style="font-size:16px;margin-bottom:14px">운영 설정</h2><form id="settingsForm"><div class="field"><label>기관명</label><input class="control" name="org" maxlength="100" required value="${esc(s.org)}"></div><div class="form-grid"><div class="field"><label>만료 사전알림일</label><input class="control" type="number" name="alertDays" min="1" max="365" required value="${s.alertDays}"></div><div class="field"><label>월 점검목표 (%)</label><input class="control" type="number" name="monthlyTarget" min="0" max="100" required value="${s.monthlyTarget}"></div></div><p class="muted" style="font-size:11px;margin-bottom:12px">사전알림일은 상태 판정·조치 안내·유효기간 표시에 즉시 적용됩니다.</p><button class="btn solid block" type="submit">설정 저장</button></form></section>
+      <section class="card pad"><h2 style="font-size:16px;margin-bottom:14px">운영 설정</h2><form id="settingsForm"><div class="field"><label>기관명</label><input class="control" name="org" maxlength="100" required value="${esc(s.org)}"></div><div class="form-grid"><div class="field"><label>만료 사전알림일</label><input class="control" type="number" name="alertDays" min="1" max="365" required value="${s.alertDays}"></div><div class="field"><label>월 점검목표 (%)</label><input class="control" type="number" name="monthlyTarget" min="0" max="100" required value="${s.monthlyTarget}"></div></div><div class="field"><label>기관 휴일 (YYYY-MM-DD, 한 줄 또는 쉼표로 구분)</label><textarea class="control" name="holidays" rows="3" placeholder="예: 2026-12-25">${esc(s.holidays||"")}</textarea></div><p class="muted" style="font-size:11px;margin-bottom:12px">사전알림일은 상태 판정·조치 안내·유효기간 표시에 즉시 적용됩니다. 기관 휴일에는 각 기기의 '공휴일' 시간표를 적용하고, 공휴일 시간표가 없으면 '출입 미확인'으로 표시합니다. 휴일 날짜는 기관이 확인한 날짜만 입력하세요.</p><button class="btn solid block" type="submit">설정 저장</button></form></section>
+      <section class="card pad"><h2 style="font-size:16px;margin-bottom:14px">운영 / 시연 모드</h2>
+        <p style="font-size:13px;margin-bottom:8px">현재: <b>${isDemoMode()?"🧪 시연 모드":"운영 모드"}</b></p>
+        <ul class="gi-prep" style="font-size:12px;line-height:1.7;margin-bottom:10px"><li>운영 모드: 시연용 기기를 지도·검색·최단거리 후보에서 제외합니다.</li><li>시연 모드: 별도 저장소(운영 데이터와 분리)에 시연 기기 A·B·C를 만들고, 모든 화면에 '시연용'을 표시합니다.</li></ul>
+        ${isDemoMode()?`<form id="demoClockForm"><div class="field"><label>출입 판정 기준 시각 (Asia/Seoul)</label><input class="control" type="datetime-local" name="demoClock" value="${esc(s.demoClock||"")}"></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm solid" type="submit">기준 시각 저장</button><button class="btn sm" type="button" id="demoClockNow">현재 시각 사용</button><button class="btn sm" type="button" id="demoReseed">시연 데이터 다시 만들기</button></div></form><button class="btn block" style="margin-top:10px" onclick="switchAppMode('operation')">운영 모드로 전환</button>`
+          :`<button class="btn block solid" onclick="switchAppMode('demo')">🧪 시연 모드로 전환</button><p class="muted" style="font-size:11px;margin-top:6px">운영 데이터는 그대로 유지됩니다. 언제든 운영 모드로 돌아올 수 있습니다.</p>`}
+      </section>
       <section class="card pad"><h2 style="font-size:16px;margin-bottom:14px">백업 · 복원</h2><div class="notice-box" style="margin-bottom:12px">JSON 백업에는 기기, 점검 사진, 사용/복구 기록, 작업, 설정이 포함될 수 있습니다. 안전한 장소에 보관하세요.</div><button class="btn block" id="backupExport">⬇ JSON 백업 다운로드</button><input type="file" id="backupFile" accept="application/json,.json" style="display:none"><button class="btn block" id="backupImport" style="margin-top:8px">⬆ JSON 백업 복원</button><button class="btn block" id="settingsReset" style="margin-top:8px;color:var(--danger)">모든 데이터 비우기</button></section>
     </div>
     <section class="card pad" style="margin-top:16px"><h2 style="font-size:15px;margin-bottom:10px">현재 구현 범위</h2><ul class="gi-prep" style="line-height:1.8"><li>저장소: <b>브라우저 localStorage</b> — 브라우저 데이터 삭제·다른 기기에서는 유지되지 않음</li><li>관리자 인증: <b>프런트 시연용</b> — 서버 인증·권한 검증 미연동</li><li>백업: <b>수동 JSON 파일</b> — 서버 자동 백업·복구 미연동</li><li>사용 알림: <b>로컬 기록만 저장</b> — 문자·푸시 등 실제 관리자 알림 미연동</li></ul></section>`;
-  $("#settingsForm").addEventListener("submit",e=>{e.preventDefault();if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}const f=new FormData(e.currentTarget);Store.updateSettings({org:f.get("org"),alertDays:+f.get("alertDays"),monthlyTarget:+f.get("monthlyTarget")});toast("운영 설정을 저장했습니다.");go("settings");});
+  $("#settingsForm").addEventListener("submit",e=>{e.preventDefault();if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}const f=new FormData(e.currentTarget);const hol=String(f.get("holidays")||"").split(/[\s,]+/).filter(Boolean);const badHol=hol.filter(v=>!/^\d{4}-\d{2}-\d{2}$/.test(v));if(badHol.length){toast(`휴일 날짜 형식 오류: ${badHol[0]}`);return;}Store.updateSettings({org:f.get("org"),alertDays:+f.get("alertDays"),monthlyTarget:+f.get("monthlyTarget"),holidays:hol.join("\n")});toast("운영 설정을 저장했습니다.");go("settings");});
+  const dcf=$("#demoClockForm");if(dcf){dcf.addEventListener("submit",e=>{e.preventDefault();Store.updateSettings({demoClock:String(new FormData(dcf).get("demoClock")||"")});toast("출입 판정 기준 시각을 저장했습니다.");go("settings");});
+    $("#demoClockNow").addEventListener("click",()=>{Store.updateSettings({demoClock:""});toast("현재 시각으로 판정합니다.");go("settings");});
+    $("#demoReseed").addEventListener("click",()=>{if(confirm("시연 저장소를 비우고 시연 기기 A·B·C를 다시 만들까요? (운영 데이터는 영향 없음)")){seedDemoData();_recoState.ref=null;toast("시연 데이터를 다시 만들었습니다.");go("settings");}});}
   $("#backupExport").addEventListener("click",()=>{if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}const json=JSON.stringify(Store.exportSnapshot(),null,2),blob=new Blob([json],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`AEDCare_백업_${todayStr()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast("JSON 백업을 다운로드했습니다.");});
   $("#backupImport").addEventListener("click",()=>{if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}const input=$("#backupFile");input.value="";input.onchange=async()=>{const file=input.files&&input.files[0];if(!file)return;try{const text=await file.text();if(!confirm("현재 로컬 데이터를 백업 파일 내용으로 교체할까요? 이 작업은 되돌리려면 현재 백업이 필요합니다."))return;const result=Store.importSnapshot(text);toast(`복원 완료 · 기기 ${result.devices}대 · 이벤트 ${result.events}건`);go("settings");}catch(err){toast("복원 실패: "+(err.message||err));}};input.click();});
   $("#settingsReset").addEventListener("click",()=>{if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}if(confirm("모든 로컬 데이터를 지우고 빈 상태로 초기화할까요?")){Store.reset();toast("모든 데이터를 지우고 빈 상태로 초기화했습니다.");go("settings");}});
@@ -2173,15 +2266,457 @@ function openInfoModal(){
       <li>브라우저 데이터 삭제, 시크릿 창, 다른 기기에서는 <b>데이터가 유지되지 않습니다.</b></li>
       <li>서버 데이터베이스·자동 백업·실제 문자/푸시 알림은 <b>미연동</b>입니다.</li>
       <li>관리자 인증은 현재 <b>프런트 데모 수준</b>이며 서버 인증·권한 검증을 대신하지 않습니다.</li>
+      <li>현재 <b>${isDemoMode()?"시연 모드":"운영 모드"}</b>입니다. 시연 모드는 운영 데이터와 분리된 저장소를 쓰고, 운영 모드는 시연 기기를 지도·검색·추천에서 제외합니다.</li>
+      <li>공공 AED 위치는 서버를 거쳐 Cloudflare D1에서 조회하며, 관리자 상태 변경은 서버 DB에 쓰지 않습니다(기관별 쓰기 권한 미구현).</li>
     </ul><div style="display:flex;gap:8px;margin-top:14px"><button class="btn block" onclick="closeModal()">닫기</button>${adminUnlocked?`<button class="btn block" id="openSettings">관리자 설정·백업</button>`:""}</div>`);
   const settings=$("#openSettings");if(settings)settings.addEventListener("click",()=>{closeModal();go("settings");});
 }
 window.openInfoModal=openInfoModal;
 
+/* ============================================================
+   운영 / 시연 모드
+   - 운영 모드: 저장소 aedcare.v1. demo 표시 기기는 지도·검색·추천에서 제외.
+   - 시연 모드: 별도 저장소 aedcare.demo.v1 (운영 데이터와 완전히 분리).
+     모든 화면 상단과 기기 카드에 '시연용'을 표시한다.
+   서버 인증·기관별 쓰기 권한이 없으므로, 관리자 상태 변경의 시민 화면 반영은
+   이 브라우저(로컬) 범위에서만 동작한다. → 시연 모드에서 시나리오로 확인.
+   ============================================================ */
+const APP_MODE_KEY="aedcare.appMode",OP_STORE_KEY="aedcare.v1",DEMO_STORE_KEY="aedcare.demo.v1";
+function isDemoMode(){try{return localStorage.getItem(APP_MODE_KEY)==="demo";}catch(e){return false;}}
+Store.KEY=isDemoMode()?DEMO_STORE_KEY:OP_STORE_KEY;Store._db=null;
+function switchAppMode(mode){localStorage.setItem(APP_MODE_KEY,mode==="demo"?"demo":"operation");location.href=location.pathname;}
+/* 시민에게 보여 줄 기기: 운영 모드에서는 시연 기기 제외 */
+function publicDevices(){const list=Store.listDevices();return isDemoMode()?list:list.filter(d=>!d.demo);}
+function demoTag(d){return d&&d.demo?'<span class="badge demo" title="시연용 기기 — 실제 설치 정보가 아닙니다">시연용</span>':"";}
+function opModeWriteNotice(){
+  return isDemoMode()
+    ?`<div class="notice-box" style="margin-bottom:14px"><b>시연 모드:</b> 이 화면의 상태 변경은 시연 저장소에만 기록되고, 같은 브라우저의 시민 지도에 바로 반영됩니다.</div>`
+    :`<div class="notice-box" style="margin-bottom:14px"><b>운영 데이터 반영 범위:</b> 서버 인증과 기관별 쓰기 권한이 아직 없어, 여기서 바꾼 상태는 <b>이 브라우저에만</b> 저장됩니다. 다른 시민의 화면이나 서버 DB에는 반영되지 않습니다. 상태 반영 흐름은 운영 설정의 <b>시연 모드</b>에서 확인하세요.</div>`;
+}
+
+/* ---------- 서울 시간 (Asia/Seoul) ---------- */
+const SEOUL_TZ="Asia/Seoul";
+const _seoulFmt=new Intl.DateTimeFormat("en-CA",{timeZone:SEOUL_TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",weekday:"short",hourCycle:"h23"});
+const DAY_KEYS=["sun","mon","tue","wed","thu","fri","sat"];
+const DAY_LABEL={mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",sun:"일",hol:"공휴일"};
+const SCHEDULE_KEYS=["mon","tue","wed","thu","fri","sat","sun","hol"];
+function seoulParts(date){
+  const p={};_seoulFmt.formatToParts(date).forEach(x=>p[x.type]=x.value);
+  let h=Number(p.hour);if(h===24)h=0;
+  return {ymd:`${p.year}-${p.month}-${p.day}`,wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday),min:h*60+Number(p.minute),hhmm:`${String(h).padStart(2,"0")}:${p.minute}`};
+}
+function fmtSeoul(iso){if(!iso)return "-";const d=new Date(iso);if(isNaN(d))return String(iso);const p=seoulParts(d);return `${p.ymd} ${p.hhmm}`;}
+function minToHHMM(m){m=((m%1440)+1440)%1440;return `${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}`;}
+function fmtSeg([s,e]){if(s===0&&e===1440)return "24시간";return `${minToHHMM(s)}–${e===1440?"24:00":minToHHMM(e)}${e>1440?"(다음 날)":""}`;}
+/* 출입 판정 기준 시각: 시연 모드에서 '시연 기준 시각'을 정했으면 그 시각, 아니면 현재 */
+function accessNow(){
+  if(isDemoMode()){const v=String(Store.getSettings().demoClock||"");if(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(v)){const d=new Date(`${v}:00+09:00`);if(!isNaN(d))return d;}}
+  return new Date();
+}
+function seoulToday(){return seoulParts(accessNow()).ymd;}
+
+/* ---------- 운영시간표 파싱 ----------
+   요일별 문자열: "09:00-18:00" · "09:00-12:00, 13:00-18:00" · "22:00-06:00"(자정 넘김) · "24시간" · "휴무" · ""(미확인) */
+function parseDayRule(text){
+  const t=String(text||"").trim();
+  if(!t)return {kind:"unknown",segs:[],text:""};
+  if(/^(휴무|휴관|closed|off)$/i.test(t))return {kind:"closed",segs:[],text:"휴무"};
+  if(/^(24\s*시간|24h|상시)$/i.test(t))return {kind:"open",segs:[[0,1440]],text:"24시간"};
+  const segs=[];let bad=false;
+  t.split(/[,，]/).forEach(part=>{
+    const m=part.trim().match(/^(\d{1,2}):?(\d{2})\s*[-~–]\s*(\d{1,2}):?(\d{2})$/);
+    if(!m){bad=true;return;}
+    const sh=+m[1],sm=+m[2],eh=+m[3],em=+m[4];
+    if(sh>23||sm>59||eh>24||em>59||(eh===24&&em>0)){bad=true;return;}
+    const s=sh*60+sm;let e=eh*60+em;if(e<=s)e+=1440;segs.push([s,e]);
+  });
+  if(bad||!segs.length)return {kind:"invalid",segs:[],text:t};
+  return {kind:"open",segs,text:t};
+}
+function parseAccessExceptions(text){
+  const map={},errors=[];
+  String(text||"").split(/\r?\n/).map(l=>l.trim()).filter(Boolean).forEach((line,i)=>{
+    const m=line.match(/^(\d{4}-\d{2}-\d{2})\s+(.+)$/);
+    if(!m){errors.push(`${i+1}번째 줄 형식 오류: ${line}`);return;}
+    const r=parseDayRule(m[2]);if(r.kind==="invalid"||r.kind==="unknown"){errors.push(`${m[1]} 시간 형식 오류: ${m[2]}`);return;}
+    map[m[1]]=r;
+  });
+  return {map,errors};
+}
+function orgHolidaySet(){return new Set(String(Store.getSettings().holidays||"").split(/[\s,]+/).filter(v=>/^\d{4}-\d{2}-\d{2}$/.test(v)));}
+function hasAccessSchedule(d){const s=d.access_schedule||{};return SCHEDULE_KEYS.some(k=>String(s[k]||"").trim())||!!String(d.access_exceptions||"").trim();}
+function resolveDayRule(d,ymd,wd,holidays){
+  const ex=parseAccessExceptions(d.access_exceptions).map[ymd];
+  if(ex)return {...ex,source:`예외일(${ymd})`};
+  const sch=d.access_schedule||{};
+  if(holidays.has(ymd))return {...parseDayRule(sch.hol),source:`공휴일(${ymd})`,holiday:true};
+  const key=DAY_KEYS[wd];return {...parseDayRule(sch[key]),source:`${DAY_LABEL[key]}요일`};
+}
+function scheduleSummary(d){
+  const s=d.access_schedule||{};const parts=SCHEDULE_KEYS.filter(k=>String(s[k]||"").trim()).map(k=>`${DAY_LABEL[k]} ${parseDayRule(s[k]).kind==="invalid"?"형식 오류":parseDayRule(s[k]).segs.length?parseDayRule(s[k]).segs.map(fmtSeg).join(", "):"휴무"}`);
+  return parts.length?parts.join(" · "):"운영시간표 없음";
+}
+/* 승인된 '문이 잠김' 제보가 기관의 마지막 출입 확인 이후면 출입 제한으로 본다 */
+function approvedReportsFor(deviceId){return Store.listReports().filter(r=>r.deviceId===deviceId&&r.status==="approved");}
+function activeLockReport(d){
+  const confirmed=d.access_confirmed_at?new Date(d.access_confirmed_at).getTime():0;
+  return approvedReportsFor(d.id).find(r=>r.type==="locked"&&new Date(r.reviewedAt||r.ts).getTime()>confirmed)||null;
+}
+/* 출입 상태: 운영시간표상 출입 가능 / 출입 제한 / 출입 미확인 */
+function accessStatus(d,at){
+  at=at||accessNow();
+  const base={confirmedAt:d.access_confirmed_at||"",confirmedBy:d.access_confirmed_by||"",note:d.access_note||"",schedule:scheduleSummary(d)};
+  const lock=activeLockReport(d);
+  if(lock)return {...base,state:"closed",label:"출입 제한",reason:`승인된 현장 제보: ${REPORT_TYPES.locked} (${fmtSeoul(lock.reviewedAt)} 승인) — 기관 재확인 전까지 제한`};
+  if(!hasAccessSchedule(d))return {...base,state:"unknown",label:"출입 미확인",reason:"기관이 확인한 운영시간표 없음"};
+  const now=seoulParts(at),prev=seoulParts(new Date(at.getTime()-86400000)),holidays=orgHolidaySet();
+  const today=resolveDayRule(d,now.ymd,now.wd,holidays),yday=resolveDayRule(d,prev.ymd,prev.wd,holidays);
+  const when=`서울 ${now.ymd} ${now.hhmm} 기준`;
+  const spill=yday.kind==="open"&&yday.segs.find(([,e])=>e>1440&&now.min<e-1440);
+  if(spill)return {...base,state:"open",label:"운영시간표상 출입 가능",reason:`${yday.source} ${fmtSeg(spill)} 구간(자정 넘김) · ${when}`,until:minToHHMM(spill[1]-1440)};
+  if(today.kind==="open"){
+    const seg=today.segs.find(([s,e])=>s<=now.min&&now.min<e);
+    if(seg)return {...base,state:"open",label:"운영시간표상 출입 가능",reason:`${today.source} ${fmtSeg(seg)} · ${when}`,until:seg[1]===1440&&seg[0]===0?"종일":minToHHMM(seg[1])};
+    return {...base,state:"closed",label:"출입 제한",reason:`${today.source} 운영시간 ${today.segs.map(fmtSeg).join(", ")} 밖 · ${when}`};
+  }
+  if(today.kind==="closed")return {...base,state:"closed",label:"출입 제한",reason:`${today.source} 휴무 · ${when}`};
+  if(today.kind==="invalid")return {...base,state:"unknown",label:"출입 미확인",reason:`${today.source} 시간표 형식 오류 (${today.text})`};
+  return {...base,state:"unknown",label:"출입 미확인",reason:`${today.source} 운영 정보 없음${today.holiday?" (공휴일 시간표 미입력)":""}`};
+}
+function accessBadge(a){return `<span class="badge ${a.state==="open"?"ok":a.state==="closed"?"danger":"neutral"}">출입: ${esc(a.label)}</span>`;}
+
+/* ---------- 기기 상태 (기록 근거별) ---------- */
+function deviceCondition(d){
+  const today=seoulToday(),last=Store.lastInspection(d);
+  const mk=(code,label,level,exclude,reasons)=>({code,label,level,exclude,reasons,lastCheck:last?last.date:""});
+  if(d.needs_post_use_check)return mk("recovering","복구 중","danger",true,["AED 사용 기록 후 복구 체크리스트 미완료"]);
+  const rc=last?resultToCode(last.result):null;
+  if(rc==="unusable")return mk("unusable","사용 불가","danger",true,[`최종 점검 결과 '${last.result}' (${last.date})`]);
+  if(rc==="repair")return mk("repair","수리 필요","danger",true,[`최종 점검 결과 '${last.result}' (${last.date})`]);
+  const expired=[["배터리",d.battery_expiry],["패드",d.pad_expiry]].filter(([,v])=>v&&v<today);
+  if(expired.length)return mk("expired","소모품 만료","danger",true,expired.map(([l,v])=>`${l} 유효기간 ${v} 만료`));
+  if(!last)return mk("unknown","상태 미확인","neutral",false,["관리자 점검 기록 없음"]);
+  const next=Store.nextInspectionDate(d);
+  if(next<today)return mk("overdue","점검 기한 초과","warn",false,[`최근 점검 ${last.date} · 점검 예정일 ${next} 경과`]);
+  const missing=[["배터리",d.battery_expiry],["패드",d.pad_expiry]].filter(([,v])=>!v).map(([l])=>`${l} 유효기간 미입력`);
+  if(missing.length)return mk("partial","점검 기록 있음 · 소모품 미확인","warn",false,[`최근 점검 ${last.date} · ${last.result}`,...missing]);
+  return mk("checked","관리자 점검 기록 있음","ok",false,[`최근 점검 ${last.date} · ${last.result}${last.inspector?` · ${last.inspector}`:""}`]);
+}
+function conditionBadge(c){return `<span class="badge ${c.level}">기기: ${esc(c.label)}</span>`;}
+
+/* ---------- 현장 제보 ---------- */
+const REPORT_TYPES={locked:"문이 잠김",not_visible:"기기가 보이지 않음",wrong_location:"위치가 다름"};
+const REPORT_STATUS={pending:"검토 대기",approved:"승인",rejected:"반려"};
+/* 제보 메모에서 연락처·주민번호 형태를 지운다 (환자 식별정보 수집 방지) */
+function maskPersonal(text){return String(text||"").replace(/\d{6}\s*-\s*\d{7}/g,"[번호 삭제]").replace(/(\+?82[-\s]?)?0\d{1,2}[-.\s]?\d{3,4}[-.\s]?\d{4}/g,"[연락처 삭제]").slice(0,200);}
+function openReportModal(deviceId){
+  const d=Store.getDevice(deviceId);if(!d){toast("기기를 찾을 수 없습니다.");return;}
+  openModal(`<div class="modal-head"><h2>📮 현장 제보</h2><button class="btn sm ghost" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px;margin-bottom:6px"><b>${esc(d.name)}</b> ${demoTag(d)}</p>
+    <div class="notice-box" style="margin-bottom:12px">응급상황이면 먼저 <b>119</b>에 신고하세요. 제보는 담당자 <b>검토 대기</b>로 저장되며, 승인된 내용만 공개 안내에 반영됩니다. 환자 이름·연락처 등 개인정보는 적지 마세요.</div>
+    <form id="reportForm"><div class="check-grid">${Object.entries(REPORT_TYPES).map(([k,l],i)=>`<label class="check-item"><input type="radio" name="type" value="${k}" ${i===0?"checked":""} required><span><b>${l}</b></span></label>`).join("")}</div>
+    <div class="field"><label>현장 메모 (선택, 200자)</label><textarea class="control" name="memo" rows="3" maxlength="200" placeholder="예: 정문은 잠겨 있고 후문은 열려 있음"></textarea></div>
+    <button class="btn solid block" type="submit">제보 저장 (검토 대기)</button></form>`);
+  $("#reportForm").addEventListener("submit",e=>{e.preventDefault();const f=new FormData(e.currentTarget);Store.addReport({deviceId,type:f.get("type"),memo:f.get("memo")});closeModal();toast("제보를 저장했습니다. 담당자 검토 후 공개 안내에 반영됩니다.");});
+}
+window.openReportModal=openReportModal;
+
+/* ---------- DB 상태 구분: 설정 누락 / 조회 실패 / 조회 성공(0건 포함) ---------- */
+let _dbHealth=null; // {state:"configured"|"not_configured"|"server_error", at}
+async function dbHealth(force){
+  if(!force&&_dbHealth&&(_dbHealth.state==="configured"||Date.now()-_dbHealth.at<15000))return _dbHealth.state;
+  try{const r=await fetch("/api/health",{cache:"no-store"});const j=await r.json();_dbHealth={state:r.ok&&j.dbConfigured?"configured":r.ok?"not_configured":"server_error",at:Date.now()};}
+  catch(e){_dbHealth={state:"server_error",at:Date.now()};}
+  return _dbHealth.state;
+}
+const DB_MSG={
+  not_configured:"DB 설정 누락 — 서버 .env에 Cloudflare D1 값(CLOUDFLARE_ACCOUNT_ID·CLOUDFLARE_API_TOKEN·D1_DATABASE_ID)이 없어 공공 AED를 조회하지 않았습니다.",
+  server_error:"서버 연결 실패 — /api/health 응답이 없어 공공 AED DB 상태를 확인할 수 없습니다.",
+};
+async function fetchDbJson(url){
+  const h=await dbHealth();
+  if(h!=="configured")return {state:h==="not_configured"?"not_configured":"error",message:DB_MSG[h]};
+  try{
+    const r=await fetch(url,{cache:"no-store"});let j={};try{j=await r.json();}catch(e){}
+    if(r.status===503&&j.error==="DB_NOT_CONFIGURED")return {state:"not_configured",message:DB_MSG.not_configured};
+    if(!r.ok)return {state:"error",status:r.status,message:`DB 조회 실패 — HTTP ${r.status}${j.message?` · ${j.message}`:""}`};
+    return {state:"ok",data:j};
+  }catch(e){return {state:"error",message:`DB 조회 실패 — 네트워크 오류 (${e.message})`};}
+}
+function dbTotalLabel(){return _dbPoints&&Number.isFinite(Number(_dbPoints.count))?`조회 확인 ${Number(_dbPoints.count).toLocaleString("ko-KR")}건`:"집계 확인 전";}
+
+/* ---------- 위치 확인: 권한 거부 / 시간 초과 / 확인 불가 구분 ---------- */
+const LOCATE_TIMEOUT_MS=8000;
+function requestLocation(){
+  return new Promise(resolve=>{
+    if(!navigator.geolocation){resolve({ok:false,code:"unsupported",message:"이 브라우저는 위치 기능을 지원하지 않습니다."});return;}
+    navigator.geolocation.getCurrentPosition(
+      p=>resolve({ok:true,lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy}),
+      err=>{const c=err&&err.code;resolve(c===1?{ok:false,code:"denied",message:"위치 권한이 거부되었습니다. 브라우저 설정에서 허용하거나 아래에서 장소를 직접 검색하세요."}
+        :c===3?{ok:false,code:"timeout",message:`위치 확인 시간(${LOCATE_TIMEOUT_MS/1000}초)이 초과되었습니다. 다시 시도하거나 장소를 직접 검색하세요.`}
+        :{ok:false,code:"unavailable",message:"현재 위치를 확인할 수 없습니다(신호 없음). 장소를 직접 검색하세요."});},
+      {enableHighAccuracy:true,timeout:LOCATE_TIMEOUT_MS,maximumAge:60000});
+  });
+}
+
+/* ---------- 대안 추천: 확인된 접근 후보 최대 3곳 ---------- */
+const RECO_RADIUS_M=3000,RECO_MAX=3;
+let _recoState={ref:null,phase:"idle",message:"",result:null,skipped:new Set(),search:null};
+function lastConfirmedText(d,cond){
+  const times=[d.access_confirmed_at?new Date(d.access_confirmed_at):null,cond.lastCheck?new Date(`${cond.lastCheck}T00:00:00+09:00`):null].filter(t=>t&&!isNaN(t));
+  if(!times.length)return "기관 확인 기록 없음";
+  const latest=new Date(Math.max(...times.map(t=>t.getTime())));
+  return d.access_confirmed_at&&new Date(d.access_confirmed_at).getTime()===latest.getTime()?`${fmtSeoul(d.access_confirmed_at)} (출입 확인${d.access_confirmed_by?` · ${d.access_confirmed_by}`:""})`:`${cond.lastCheck} (점검 기록)`;
+}
+/* 후보 1건 평가 → group: confirmed | unconfirmed | excluded */
+function evaluateCandidate(c){
+  if(c.kind==="public"){
+    const a=c.item;
+    return {...c,name:a.name,group:c.skipped?"excluded":"unconfirmed",
+      access:{state:"unknown",label:"출입 미확인",reason:"기관이 확인한 출입 정보 없음"},
+      cond:{code:"unknown",label:"상태 미확인",level:"neutral",reasons:["공공데이터에는 설치 위치만 있음"]},
+      reasons:c.skipped?["사용자가 '접근 어려움'으로 건너뜀"]:["공공데이터 설치 위치만 확인됨 — 출입·점검 정보 없음"],
+      source:"공공데이터(SafeMap) · Cloudflare D1",lastChecked:_dbPoints&&_dbPoints.generatedAt?`기관 확인 없음 · DB 기준 ${fmtSeoul(_dbPoints.generatedAt.replace(/([+-]\d{2})(\d{2})$/,"$1:$2"))}`:"기관 확인 없음",
+      approved:[]};
+  }
+  const d=c.device,access=accessStatus(d),cond=deviceCondition(d),approved=approvedReportsFor(d.id);
+  const excluded=[];
+  if(cond.exclude)excluded.push(`기기 ${cond.label}: ${cond.reasons.join(", ")}`);
+  if(access.state==="closed")excluded.push(`${access.label}: ${access.reason}`);
+  if(c.skipped)excluded.push("사용자가 '접근 어려움'으로 건너뜀");
+  let group="unconfirmed",reasons=[];
+  if(excluded.length){group="excluded";reasons=excluded;}
+  else if(access.state==="open"&&cond.code==="checked"){group="confirmed";reasons=[`${access.label} — ${access.reason}${access.until?` (${access.until==="종일"?"종일 개방":access.until+"까지"})`:""}`,`${cond.label} — ${cond.reasons[0]}`];}
+  else{if(access.state!=="open")reasons.push(`${access.label}: ${access.reason}`);if(cond.code!=="checked")reasons.push(`기기 ${cond.label}: ${cond.reasons.join(", ")}`);}
+  return {...c,name:d.name,group,access,cond,reasons,approved,
+    source:`기관 확인 정보(관리자 등록)${d.public_source_id?` · 공공데이터 원본 ID ${d.public_source_id} 연결`:""}`,
+    lastChecked:lastConfirmedText(d,cond)};
+}
+async function computeRecommendations(ref){
+  const linked=new Set(publicDevices().map(d=>String(d.public_source_id||"")).filter(Boolean));
+  const local=validMapDevices(publicDevices()).map(d=>({kind:"local",key:"L:"+d.id,device:d,dist:distanceMeters(ref.lat,ref.lng,Number(d.lat),Number(d.lng))})).filter(c=>c.dist<=RECO_RADIUS_M);
+  const db=await fetchDbJson(`/api/aeds/nearest?lat=${ref.lat.toFixed(6)}&lng=${ref.lng.toFixed(6)}&radius=${RECO_RADIUS_M}&limit=20`);
+  const pub=db.state==="ok"?(db.data.items||[]).filter(a=>!linked.has(String(a.id))).map(a=>({kind:"public",key:"P:"+a.id,item:a,dist:Number(a.distance_m)})):[];
+  const all=[...local,...pub].map(c=>evaluateCandidate({...c,skipped:_recoState.skipped.has(c.key)})).sort((a,b)=>a.dist-b.dist);
+  const confirmed=all.filter(c=>c.group==="confirmed");
+  return {ref,db,at:accessNow(),all,confirmed:confirmed.slice(0,RECO_MAX),
+    unconfirmed:all.filter(c=>c.group==="unconfirmed").slice(0,RECO_MAX),
+    excluded:all.filter(c=>c.group==="excluded"),
+    counts:{local:local.length,public:pub.length,publicTotal:db.state==="ok"?Number(db.data.totalInRadius||0):null,confirmed:confirmed.length}};
+}
+function recoShortageText(r){
+  if(r.confirmed.length>=RECO_MAX)return "";
+  const ex=r.excluded,why={};ex.forEach(c=>{const k=c.reasons[0].split(":")[0].split(" —")[0];why[k]=(why[k]||0)+1;});
+  const parts=[`반경 ${fmtDist(RECO_RADIUS_M)}(직선거리) 안에서 기관이 출입·점검을 모두 확인한 후보가 ${r.confirmed.length}곳입니다.`];
+  if(!r.counts.local)parts.push("이 반경에 기관 등록 기기가 없습니다.");
+  if(ex.length)parts.push(`제외 ${ex.length}곳(${Object.entries(why).map(([k,n])=>`${k} ${n}`).join(", ")}).`);
+  const unk=r.all.filter(c=>c.group==="unconfirmed");
+  if(unk.length)parts.push(`미확인 ${unk.length}곳은 운영시간표·점검 기록이 없거나 공공데이터 위치만 있어 확인 후보에서 뺐습니다.`);
+  if(r.db.state!=="ok")parts.push(r.db.message);
+  else if(r.counts.publicTotal===0)parts.push(`공공 AED DB 조회 성공 · 반경 안 결과 0건.`);
+  return parts.join(" ");
+}
+function recoCardHtml(c,rank){
+  const isLocal=c.kind==="local",d=isLocal?c.device:null;
+  const canSkip=c.group!=="excluded";
+  return `<div class="reco-card ${c.group}" data-reco-key="${esc(c.key)}">
+    <div class="ai-top"><strong>${rank?`${rank}. `:""}${esc(c.name)}</strong>${isLocal?demoTag(d):""}</div>
+    <div class="reco-dist">📏 직선거리 ${fmtDist(c.dist)}</div>
+    <div class="reco-badges">${accessBadge(c.access)}${conditionBadge(c.cond)}</div>
+    <div class="reco-why"><b>${c.group==="excluded"?"제외 사유":c.group==="confirmed"?"추천 이유":"확인 필요"}</b><ul>${c.reasons.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    ${c.approved&&c.approved.length?`<div class="reco-why warn"><b>승인된 현장 제보</b><ul>${c.approved.slice(0,2).map(r=>`<li>${esc(r.publicNote||REPORT_TYPES[r.type])} (${fmtSeoul(r.reviewedAt)})</li>`).join("")}</ul></div>`:""}
+    <div class="reco-meta">출처: ${esc(c.source)}<br>마지막 확인: ${esc(c.lastChecked)}</div>
+    <div class="reco-actions"><button class="btn sm" data-reco-go>지도에서 보기</button>${isLocal?`<button class="btn sm" data-reco-detail>상세·현장 안내</button>`:""}${canSkip?`<button class="btn sm" data-reco-skip title="이 기기를 건너뛰고 다음 후보를 봅니다">접근 어려움 → 다음 후보</button>`:""}</div>
+  </div>`;
+}
+function renderRecoPanel(){
+  const box=$("#recoPanel");if(!box)return;const s=_recoState,r=s.result;
+  const refLabel=s.ref?`${esc(s.ref.label)} <span class="muted">(${s.ref.lat.toFixed(4)}, ${s.ref.lng.toFixed(4)})</span>`:"기준 위치를 정하세요";
+  let body="";
+  if(s.phase==="locating")body=`<div class="db-note">📍 현재 위치 확인 중… (최대 ${LOCATE_TIMEOUT_MS/1000}초)</div>`;
+  else if(s.phase==="loc_error")body=`<div class="reco-alert danger" role="alert"><b>${esc(s.message)}</b></div>`;
+  else if(s.phase==="loading")body=`<div class="db-note">추천 후보 계산 중…</div>`;
+  else if(s.phase==="done"&&r){
+    const shortage=recoShortageText(r);
+    body=`<div class="reco-sub">✅ 확인된 접근 후보 (가까운 순 최대 ${RECO_MAX}곳)</div>
+      ${r.confirmed.length?r.confirmed.map((c,i)=>recoCardHtml(c,i+1)).join(""):`<div class="db-note">확인된 접근 후보가 없습니다.</div>`}
+      ${shortage?`<div class="reco-alert warn"><b>후보가 부족한 이유</b><br>${esc(shortage)}</div>`:""}
+      ${r.confirmed.length<RECO_MAX&&r.unconfirmed.length?`<div class="reco-sub">⚠️ 미확인 후보 (현장 확인 필요)</div>${r.unconfirmed.map(c=>recoCardHtml(c,0)).join("")}`:""}
+      ${r.excluded.length?`<details class="reco-excluded" ${r.excluded.some(c=>r.confirmed[0]&&c.dist<r.confirmed[0].dist)?"open":""}><summary>🚫 제외된 기기 ${r.excluded.length}곳 (사유 보기)</summary>${r.excluded.slice(0,6).map(c=>recoCardHtml(c,0)).join("")}</details>`:""}
+      <div class="reco-meta" style="margin-top:6px">판정 기준 시각: ${esc(fmtSeoul(r.at.toISOString()))} (Asia/Seoul)${isDemoMode()&&Store.getSettings().demoClock?" · 시연 기준 시각":""} · 거리는 모두 직선거리이며 실제 이동 경로와 다를 수 있습니다.</div>`;
+  }
+  const search=s.search;
+  box.innerHTML=`<div class="reco-panel">
+    <div class="reco-head"><b>🧭 가까운 사용 가능 AED 추천</b>${isDemoMode()?'<span class="badge demo">시연용</span>':""}</div>
+    <div class="reco-ref">기준: ${refLabel}</div>
+    <div class="reco-controls"><button class="btn sm solid" data-reco-locate>📍 내 위치로</button><button class="btn sm" data-reco-center>지도 중심 기준</button>${isDemoMode()?`<button class="btn sm" data-reco-demo>시연 기준 위치</button>`:""}</div>
+    <form class="reco-search" data-reco-search><input class="control" name="q" placeholder="장소·주소로 기준 위치 직접 검색 (예: 부산시청)" value="${esc(search&&search.q||"")}" aria-label="기준 위치 직접 검색"><button class="btn sm" type="submit">검색</button></form>
+    ${search?`<div class="reco-search-result">${search.state==="loading"?`<div class="db-note">검색 중…</div>`:search.state==="ok"?(search.items.length?search.items.map((it,i)=>`<button type="button" class="reco-place" data-place="${i}"><b>${esc(it.name)}</b>${it.demo?' <span class="badge demo">시연용</span>':""}<span>${esc(it.address||"")} · ${esc(it.src)}</span></button>`).join(""):`<div class="db-note">'${esc(search.q)}' 검색 결과 0건 (조회 성공). 다른 이름이나 주소로 검색하세요.</div>`):`<div class="reco-alert danger">${esc(search.message)}</div>`}</div>`:""}
+    ${body}
+  </div>`;
+  box.querySelector("[data-reco-locate]").addEventListener("click",recoUseMyLocation);
+  box.querySelector("[data-reco-center]").addEventListener("click",()=>{if(!_map){toast("배경지도가 없어 지도 중심을 쓸 수 없습니다. 장소를 검색하세요.");return;}const c=_map.getCenter();runRecommendations({lat:c.lat,lng:c.lng,label:"지도 중심"});});
+  const demoBtn=box.querySelector("[data-reco-demo]");if(demoBtn)demoBtn.addEventListener("click",()=>runRecommendations({...DEMO_REF},true));
+  box.querySelector("[data-reco-search]").addEventListener("submit",e=>{e.preventDefault();recoSearch(new FormData(e.currentTarget).get("q"));});
+  box.querySelectorAll("[data-place]").forEach(b=>b.addEventListener("click",()=>{const it=_recoState.search.items[Number(b.dataset.place)];_recoState.search=null;runRecommendations({lat:it.lat,lng:it.lng,label:`검색한 장소: ${it.name}`},true);}));
+  if(r)box.querySelectorAll("[data-reco-key]").forEach(card=>{
+    const c=r.all.find(x=>x.key===card.dataset.recoKey);if(!c)return;
+    const goBtn=card.querySelector("[data-reco-go]");if(goBtn)goBtn.addEventListener("click",()=>{const lat=c.kind==="local"?Number(c.device.lat):Number(c.item.latitude),lng=c.kind==="local"?Number(c.device.lng):Number(c.item.longitude);if(_map){_map.setView([lat,lng],17);if(c.kind==="local"&&_markers[c.device.id])setTimeout(()=>_markers[c.device.id].openPopup(),300);}else toast(`좌표 ${lat.toFixed(5)}, ${lng.toFixed(5)}`);});
+    const det=card.querySelector("[data-reco-detail]");if(det)det.addEventListener("click",()=>openDeviceDetail(c.device.id));
+    const skip=card.querySelector("[data-reco-skip]");if(skip)skip.addEventListener("click",()=>{_recoState.skipped.add(c.key);toast(`'${c.name}'을(를) 건너뛰고 다음 후보를 찾습니다.`);runRecommendations(_recoState.ref,false);});
+  });
+}
+async function runRecommendations(ref,resetSkip){
+  if(resetSkip)_recoState.skipped=new Set();
+  _recoState.ref=ref;_recoState.phase="loading";renderRecoPanel();
+  const result=await computeRecommendations(ref);
+  if(_recoState.ref!==ref)return;
+  _recoState.result=result;_recoState.phase="done";renderRecoPanel();
+  if(_map&&window.L){if(_userMarker)_map.removeLayer(_userMarker);_userMarker=L.circleMarker([ref.lat,ref.lng],{radius:9,color:"#2f6bff",fillColor:"#2f6bff",fillOpacity:.9,weight:3}).addTo(_map).bindTooltip(ref.label);}
+  _userLoc=window.L&&typeof L.latLng==="function"?L.latLng(ref.lat,ref.lng):{lat:ref.lat,lng:ref.lng};
+  return result;
+}
+async function recoUseMyLocation(){
+  _recoState.phase="locating";renderRecoPanel();
+  const loc=await requestLocation();
+  if(!loc.ok){_recoState.phase="loc_error";_recoState.message=loc.message;_recoState.locError=loc.code;renderRecoPanel();const inp=$("#recoPanel input[name=q]");if(inp)inp.focus();return loc;}
+  if(_map)_map.setView([loc.lat,loc.lng],Math.max(DB_MIN_ZOOM+1,_map.getZoom()));
+  await runRecommendations({lat:loc.lat,lng:loc.lng,label:"내 위치"},true);
+  const top=_recoState.result&&_recoState.result.confirmed[0];
+  toast(top?`확인된 후보 1순위: ${top.name} (직선거리 ${fmtDist(top.dist)})`:"확인된 접근 후보가 없습니다. 미확인 후보와 사유를 확인하세요.");
+  return loc;
+}
+async function recoSearch(q){
+  q=String(q||"").trim();if(q.length<2){toast("검색어를 2자 이상 입력하세요.");return;}
+  _recoState.search={q,state:"loading",items:[]};renderRecoPanel();
+  const nq=normalizeSearch(q);
+  const local=validMapDevices(publicDevices()).filter(d=>normalizeSearch([d.name,d.address,d.building].join(" ")).includes(nq)).map(d=>({name:d.name,address:d.address,lat:Number(d.lat),lng:Number(d.lng),src:"기관 등록 기기",demo:d.demo}));
+  const db=await fetchDbJson(`/api/aeds/search?q=${encodeURIComponent(q)}&limit=8`);
+  if(db.state!=="ok"&&!local.length){_recoState.search={q,state:"error",message:db.message,items:[]};renderRecoPanel();return;}
+  const pub=db.state==="ok"?(db.data.items||[]).map(a=>({name:a.name,address:a.address,lat:Number(a.latitude),lng:Number(a.longitude),src:"공공데이터 위치"})):[];
+  _recoState.search={q,state:"ok",items:[...local,...pub].slice(0,10),dbNote:db.state==="ok"?"":db.message};renderRecoPanel();
+  if(db.state!=="ok")toast(db.message);
+}
+/* 복구 완료 등 상태 변경 직후 해당 기기의 추천 판정을 다시 계산해 알려 준다 */
+function reevaluateDeviceText(deviceId){
+  const d=Store.getDevice(deviceId);if(!d)return "";
+  const c=evaluateCandidate({kind:"local",key:"L:"+d.id,device:d,dist:0});
+  return c.group==="confirmed"?`'${d.name}' 재평가: 확인된 접근 후보로 포함됩니다.`:c.group==="excluded"?`'${d.name}' 재평가: 아직 추천 제외 — ${c.reasons[0]}`:`'${d.name}' 재평가: 미확인 후보 — ${c.reasons[0]}`;
+}
+
+/* ---------- 기기 상세: 기관 확인 정보 · 현장 안내 · 공공데이터 설치 위치 (구분 표시) ---------- */
+function detailAccessSections(d){
+  const acc=accessStatus(d),cond=deviceCondition(d),rec=evaluateCandidate({kind:"local",key:"L:"+d.id,device:d,dist:0});
+  const approved=approvedReportsFor(d.id);
+  const step=(n,label,val)=>`<li><span class="route-n">${n}</span><div><small>${label}</small><b>${val?esc(val):'<span class="muted">미확인</span>'}</b></div></li>`;
+  return `<div class="gi-lbl">기관 확인 정보 <span class="muted" style="font-weight:600">(설치기관 담당자가 확인·입력)</span></div>
+    <div class="detail-grid">
+      <div class="detail-cell"><small>출입 상태</small><b>${accessBadge(acc)}</b><div class="muted" style="font-size:11px;margin-top:4px">${esc(acc.reason)}</div></div>
+      <div class="detail-cell"><small>기기 상태 (기록 근거)</small><b>${conditionBadge(cond)}</b><div class="muted" style="font-size:11px;margin-top:4px">${esc(cond.reasons.join(" · "))}</div></div>
+      <div class="detail-cell"><small>운영시간표 (Asia/Seoul)</small><b style="font-size:12px">${esc(scheduleSummary(d))}</b>${String(d.access_exceptions||"").trim()?`<div class="muted" style="font-size:11px;margin-top:4px">예외일: ${esc(String(d.access_exceptions).split(/\r?\n/).filter(Boolean).join(", "))}</div>`:""}</div>
+      <div class="detail-cell"><small>마지막 확인</small><b style="font-size:12px">${esc(lastConfirmedText(d,cond))}</b></div>
+    </div>
+    <div class="guide-item ${rec.group==="excluded"?"urgent":""}" style="margin-top:8px"><div class="gi-task"><b>추천 판정: ${rec.group==="confirmed"?"확인된 접근 후보":rec.group==="excluded"?"우선 추천 제외":"미확인 후보"}</b></div><ul class="gi-prep" style="margin-top:4px">${rec.reasons.map(r=>`<li>• ${esc(r)}</li>`).join("")}</ul></div>
+    <div class="gi-lbl">현장 안내 · 출입구 → 건물/층 → 보관함 위치</div>
+    <ol class="route-steps">${step(1,"출입구",d.route_entrance)}${step(2,"건물/층",[d.building,d.floor].filter(Boolean).join(" "))}${step(3,"보관함 위치",d.spot)}</ol>
+    ${approved.length?`<div class="gi-lbl">승인된 현장 제보 (담당자 확인)</div>${approved.map(r=>`<div class="guide-item urgent"><b>${esc(r.publicNote||REPORT_TYPES[r.type])}</b><div class="muted" style="font-size:11px">${esc(REPORT_TYPES[r.type])} · 승인 ${fmtSeoul(r.reviewedAt)}</div></div>`).join("")}`:""}
+    <div class="gi-lbl">공공데이터 설치 위치 (SafeMap)</div>
+    <div class="detail-cell" id="publicSourceBox">${d.public_source_id?`원본 ID <b class="mono">${esc(d.public_source_id)}</b> · 불러오는 중…`:`<span class="muted">연결된 공공데이터 원본 ID 없음 — 이름·주소가 비슷해도 자동으로 연결하지 않습니다. 관리자가 기기 수정에서 원본 ID를 확인해 연결할 수 있습니다.</span>`}</div>`;
+}
+async function fillPublicSourceSection(d){
+  if(!d.public_source_id)return;
+  const res=await fetchDbJson(`/api/aeds/item?id=${encodeURIComponent(d.public_source_id)}`);
+  const box=$("#publicSourceBox");if(!box)return;
+  if(res.state==="ok"&&res.data.item){const a=res.data.item;box.innerHTML=`원본 ID <b class="mono">${esc(a.id)}</b> (연결 확인 ${esc(d.public_link_checked_at?fmtSeoul(d.public_link_checked_at):"-")})<br><b>${esc(a.name)}</b><br><span class="muted" style="font-size:12px">${esc(a.address)}${a.detail_address?` · ${esc(a.detail_address)}`:""}${[a.source_maker,a.source_model].filter(Boolean).length?` · ${esc([a.source_maker,a.source_model].filter(Boolean).join(" "))}`:""}</span>`;}
+  else box.innerHTML=`원본 ID <b class="mono">${esc(d.public_source_id)}</b> · <span style="color:var(--danger)">${esc(res.state==="ok"?"DB에 해당 원본 ID가 없습니다.":res.message)}</span>`;
+}
+/* 공공 AED 팝업 → 원본 ID를 그대로 연결한 관리 기기 등록 (설치 위치만 복사, 출입·점검은 기관이 입력) */
+function openDeviceFromPublic(publicId){
+  if(!adminUnlocked){toast("관리자 인증이 필요합니다.");return;}
+  const a=_dbItems.find(x=>String(x.id)===String(publicId))||(_recoState.result&&(_recoState.result.all.find(c=>c.kind==="public"&&String(c.item.id)===String(publicId))||{}).item);
+  if(!a){toast("공공 AED 정보를 다시 불러온 뒤 시도하세요.");return;}
+  if(publicDevices().some(d=>d.public_source_id===String(a.id))){toast("이미 이 원본 ID로 연결된 관리 기기가 있습니다.");return;}
+  openDeviceModal(null,{name:a.name,address:a.address,lat:a.latitude,lng:a.longitude,spot:a.detail_address||"",public_source_id:String(a.id)});
+}
+
+/* ---------- 시연 데이터 (시연 모드 전용 저장소에만 생성) ----------
+   기준 위치: 부산광역시청 앞. A는 가장 가깝지만 평일 주간만 개방(야간 출입 제한),
+   B는 24시간 개방·최근 점검 기록, C는 사용 후 복구 중(자정을 넘겨 01:00까지 개방). */
+const DEMO_REF={lat:35.17985,lng:129.07560,label:"시연 기준 위치 (부산시청 앞)"};
+function ensureDemoData(){
+  if(!isDemoMode())return;
+  if(localStorage.getItem(DEMO_STORE_KEY)&&Store.listDevices().length)return;
+  seedDemoData();
+}
+function seedDemoData(){
+  if(!isDemoMode())return;
+  Store.reset();
+  const today=seoulParts(new Date()).ymd,ago=n=>addDays(today,-n),later=n=>addDays(today,n),confirmedAt=`${ago(2)}T10:00:00+09:00`;
+  const common={model:"NT-381",source:"manual",demo:true,battery_expiry:later(400),pad_expiry:later(200),install_date:ago(300),inspect_cycle_days:30,access_confirmed_at:confirmedAt,access_confirmed_by:"시연 담당자"};
+  const wk={mon:"09:00-18:00",tue:"09:00-18:00",wed:"09:00-18:00",thu:"09:00-18:00",fri:"09:00-18:00",sat:"휴무",sun:"휴무",hol:"휴무"};
+  const all24={mon:"24시간",tue:"24시간",wed:"24시간",thu:"24시간",fri:"24시간",sat:"24시간",sun:"24시간",hol:"24시간"};
+  const late={mon:"05:30-01:00",tue:"05:30-01:00",wed:"05:30-01:00",thu:"05:30-01:00",fri:"05:30-01:00",sat:"05:30-01:00",sun:"05:30-01:00",hol:"05:30-01:00"};
+  const [a,b,c]=Store.addDevices([
+    {...common,id:"DEMO-A",name:"시연 A · 구청 별관 민원실",address:"부산광역시 연제구 (시연용 주소)",lat:35.18090,lng:129.07600,building:"별관",floor:"1층",spot:"민원실 안내데스크 옆 벽면 보관함",route_entrance:"정문 경비실 옆 출입구",access_schedule:wk,access_note:"평일 주간에만 건물 개방",manager:"시연 담당자"},
+    {...common,id:"DEMO-B",name:"시연 B · 24시 편의점 앞 공용 보관함",address:"부산광역시 연제구 (시연용 주소)",lat:35.18245,lng:129.07720,building:"상가동",floor:"1층(외부)",spot:"편의점 출입문 오른쪽 벽 보관함",route_entrance:"큰길 쪽 상가 입구",access_schedule:all24,access_note:"외부 보관함, 상시 접근 가능",manager:"시연 담당자"},
+    {...common,id:"DEMO-C",name:"시연 C · 지하철역 대합실",address:"부산광역시 연제구 (시연용 주소)",lat:35.17700,lng:129.07280,building:"역사",floor:"지하 1층",spot:"개찰구 앞 엘리베이터 오른쪽",route_entrance:"3번 출구",access_schedule:late,access_note:"첫차 05:30 ~ 막차 후 01:00 개방",manager:"시연 담당자"},
+  ]);
+  [a,b,c].forEach(d=>Store.recordInspection(d.id,null,{date:ago(3),result:"정상",inspector:"시연 점검자",memo:"시연용 점검 기록"}));
+  Store.addUsageEvent({ts:new Date(Date.now()-3600000).toISOString(),deviceId:c.id,deviceName:c.name,address:c.address,lat:c.lat,lng:c.lng,call119:"unknown",note:"시연용 사용 기록 — 복구 체크리스트 대기"});
+  // 시연 기준 시각: 가장 최근 평일 23:00 (주말이면 직전 금요일) → A는 '야간' 출입 제한으로 판정된다.
+  const wd=seoulParts(new Date()).wd,demoDay=wd===0?ago(2):wd===6?ago(1):today;
+  Store.updateSettings({org:"AED Care 시연 기관",demoClock:`${demoDay}T23:00`});
+}
+
+/* ============================================================
+   VIEW: 현장 제보 검토 (관리자) — 승인된 제보만 공개 안내에 반영
+   ============================================================ */
+let _reportFilter="pending";
+Views.reports=function(host){
+  const all=Store.listReports(),devices=new Map(Store.listDevices().map(d=>[d.id,d]));
+  const counts={pending:0,approved:0,rejected:0};all.forEach(r=>counts[r.status]=(counts[r.status]||0)+1);
+  const list=all.filter(r=>_reportFilter==="all"||r.status===_reportFilter);
+  host.innerHTML=`<div class="page-head"><div><h1>현장 제보 검토</h1><p>시민 제보는 <b>담당자 검토 대기</b>로 저장되며, 승인한 내용만 시민 상세 화면과 추천 카드에 공개됩니다.</p></div></div>
+    ${opModeWriteNotice()}
+    <div class="filter-row">${[["pending","검토 대기"],["approved","승인"],["rejected","반려"],["all","전체"]].map(([k,l])=>`<button class="filter-chip ${_reportFilter===k?"on":""}" data-rpf="${k}">${l} ${k==="all"?all.length:(counts[k]||0)}</button>`).join("")}</div>
+    <div class="card pad">${list.length?list.map(r=>{const d=devices.get(r.deviceId);return `<div class="guide-item ${r.status==="pending"?"urgent":""}" style="margin-bottom:10px">
+      <div class="gi-task"><b>${esc(REPORT_TYPES[r.type]||r.type)}</b>${d?demoTag(d):""}<span class="badge ${r.status==="approved"?"ok":r.status==="rejected"?"neutral":"warn"}">${esc(REPORT_STATUS[r.status]||r.status)}</span></div>
+      <div style="font-size:12.5px;margin-top:4px">${esc(d?d.name:"삭제된 기기")} <span class="mono muted" style="font-size:10px">${esc(r.deviceId)}</span></div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">제보 ${fmtSeoul(r.ts)}${r.memo?` · 메모: ${esc(r.memo)}`:""}</div>
+      ${r.status!=="pending"?`<div class="muted" style="font-size:11.5px;margin-top:2px">검토 ${fmtSeoul(r.reviewedAt)} · ${esc(r.reviewedBy||"-")}${r.publicNote?` · 공개 안내: ${esc(r.publicNote)}`:""}</div>`:`
+      <form class="report-review" data-report="${esc(r.id)}" style="margin-top:8px">
+        <div class="form-grid"><div class="field"><label>검토자 *</label><input class="control" name="by" required placeholder="이름 또는 부서"></div>
+        <div class="field"><label>공개 안내 문구 (승인 시)</label><input class="control" name="publicNote" maxlength="120" value="${esc(REPORT_TYPES[r.type]||"")} — 담당자 확인"></div></div>
+        <div style="display:flex;gap:6px"><button class="btn sm solid" name="decision" value="approved" type="submit">승인 · 공개 반영</button><button class="btn sm" name="decision" value="rejected" type="submit">반려</button></div>
+      </form>`}</div>`;}).join(""):`<div class="empty"><div class="ic">📮</div><b>해당 제보가 없습니다</b><p>시민이 기기 상세 화면에서 '현장 제보'를 남기면 여기에 표시됩니다.</p></div>`}</div>`;
+  host.querySelectorAll("[data-rpf]").forEach(b=>b.addEventListener("click",()=>{_reportFilter=b.dataset.rpf;go("reports");}));
+  host.querySelectorAll("form.report-review").forEach(form=>form.addEventListener("submit",e=>{e.preventDefault();const decision=e.submitter?e.submitter.value:"approved";const f=new FormData(form);
+    try{Store.reviewReport(form.dataset.report,decision,{by:f.get("by"),publicNote:f.get("publicNote")});toast(decision==="approved"?"승인했습니다. 시민 안내와 추천 후보에 반영됩니다.":"반려했습니다. 공개 안내에 반영되지 않습니다.");go("reports");}catch(err){toast(err.message||"검토 저장 실패");}}));
+};
+
 /* ---------- boot ---------- */
-const _ic=$("#infoChip");if(_ic)_ic.addEventListener("click",openInfoModal);
+const _ic=$("#infoChip");if(_ic){_ic.addEventListener("click",openInfoModal);_ic.innerHTML=isDemoMode()?'<span class="dot warn"></span>시연 모드 · 로컬 저장 ⓘ':'<span class="dot ok"></span>운영 모드 · 로컬 저장 ⓘ';}
 const _topExport=$("#topCsvExport");if(_topExport)_topExport.addEventListener("click",exportAllDevicesCsv);
-setMode("citizen","home");
+if(isDemoMode())ensureDemoData();
+// 지도 팝업 안 버튼(Leaflet이 동적으로 만드는 DOM)은 위임 이벤트로 처리
+document.addEventListener("click",e=>{
+  const det=e.target.closest&&e.target.closest("[data-open-detail]");if(det){openDeviceDetail(det.dataset.openDetail);return;}
+  const reg=e.target.closest&&e.target.closest("[data-pub-register]");if(reg)openDeviceFromPublic(reg.dataset.pubRegister);
+});
+// 다른 탭(관리자 화면)에서 상태를 바꾸면 시민 화면에 바로 반영
+window.addEventListener("storage",e=>{
+  if(e.key===APP_MODE_KEY){location.reload();return;}
+  if(e.key!==Store.KEY)return;
+  Store._db=null;
+  if(activeView==="map"&&typeof _mapLocalRefresh==="function")_mapLocalRefresh();
+  else if(["home","status","reports","recovery","devices","dashboard"].includes(activeView)&&!$("#modal").classList.contains("show"))go(activeView);
+});
+// 보관함 QR·링크: ?device=ID (상세) / ?device=ID&report=1 (제보)
+(function bootDeepLink(){
+  const q=new URLSearchParams(location.search),id=q.get("device");
+  setMode("citizen",id?"map":"home");
+  if(id){const d=Store.getDevice(id);if(d){setTimeout(()=>{q.get("report")==="1"?openReportModal(id):openDeviceDetail(id);},300);}else toast("링크의 기기를 찾을 수 없습니다. (이 브라우저에 등록된 기기만 열 수 있습니다)");}
+})();
 </script>
 </body>
 </html>

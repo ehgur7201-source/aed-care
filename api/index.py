@@ -13,7 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from server import AEDCareHandler  # noqa: E402
 
-API_PATHS = {"/api/health", "/api/safemap/aed", "/api/aeds", "/api/aeds/nearest", "/api/aeds/points"}
+API_PATHS = {"/api/health", "/api/safemap/aed", "/api/aeds", "/api/aeds/nearest", "/api/aeds/points",
+             "/api/aeds/search", "/api/aeds/item"}
 
 
 class handler(AEDCareHandler):

@@ -32,6 +32,8 @@ _cache: dict[tuple[int, int], tuple[float, bytes]] = {}
 # 공공 AED 데이터베이스(Cloudflare D1) 조회 설정: API 토큰은 서버에서만 사용합니다.
 DB_MAX_LIMIT = 2000
 DB_DEFAULT_LIMIT = 800
+NEAREST_DEFAULT_RADIUS_M = 3000   # 가까운 AED 검색 기본 반경(직선거리)
+NEAREST_MAX_RADIUS_M = 30000
 KOREA_LNG = (124.0, 132.0)
 KOREA_LAT = (33.0, 39.0)
 
@@ -92,7 +94,9 @@ class DBError(Exception):
 DATASET_TTL_SECONDS = 6 * 3600
 D1_PAGE_ROWS = 5000
 # Vercel 함수는 /tmp만 쓸 수 있습니다(같은 인스턴스가 살아 있는 동안 유지).
-DATASET_CACHE_FILE = (Path("/tmp/aedcare") if os.environ.get("VERCEL") else ROOT / ".cache") / "aed_d1.json"
+_CACHE_DIR_DEFAULT = Path("/tmp/aedcare") if os.environ.get("VERCEL") else ROOT / ".cache"
+# AEDCARE_CACHE_DIR: 테스트 등에서 캐시 위치를 바꿀 때 사용 (예: DB 실패 상황 재현)
+DATASET_CACHE_FILE = Path(os.environ.get("AEDCARE_CACHE_DIR") or _CACHE_DIR_DEFAULT) / "aed_d1.json"
 # 공개 AED 데이터 응답은 CDN(Vercel 등)에 캐시해 함수 실행과 D1 읽기를 줄입니다.
 PUBLIC_CACHE = "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
 ROW_FIELDS = ("id", "name", "address", "detail_address", "sido", "gugun", "latitude", "longitude", "source_maker", "source_model")
@@ -226,6 +230,59 @@ def aeds_in_bbox(
     return result
 
 
+def aeds_within_radius(lat: float, lng: float, radius_m: float, limit: int) -> tuple[list[dict[str, Any]], int]:
+    """기준점에서 반경(직선거리) 안의 AED를 가까운 순으로 돌려줍니다. (결과, 반경 안 전체 건수)
+
+    사각형 첫 결과에서 멈추지 않고, 반경을 덮는 영역 전체를 거리로 걸러 정렬합니다.
+    """
+    rows = get_dataset()["rows"]
+    # 사전 필터는 넉넉하게(1도≈111.195km, 여유 2%) 잡고, 최종 판정은 하버사인 거리로 한다.
+    dlat = radius_m / 111_195.0 * 1.02
+    worst_lat = min(89.0, abs(lat) + dlat)
+    dlng = dlat / max(0.05, math.cos(math.radians(worst_lat)))
+    scored = []
+    for r in rows:
+        if abs(r[6] - lat) > dlat or abs(r[7] - lng) > dlng:
+            continue
+        dist = _distance_m(lat, lng, r[6], r[7])
+        if dist <= radius_m:
+            scored.append((dist, r))
+    scored.sort(key=lambda x: (x[0], x[1][0]))
+    result = []
+    for dist, r in scored[:limit]:
+        item = dict(zip(ROW_FIELDS, r))
+        item["distance_m"] = round(dist, 2)
+        result.append(item)
+    return result, len(scored)
+
+
+def _norm(text: str) -> str:
+    return " ".join(str(text or "").casefold().split())
+
+
+def search_aeds(query: str, limit: int) -> tuple[list[dict[str, Any]], int]:
+    """이름·주소·상세 위치에 검색어가 모두 들어간 AED (수동 위치 지정용)."""
+    terms = [t for t in _norm(query).split(" ") if t]
+    if not terms:
+        return [], 0
+    rows = get_dataset()["rows"]
+    hits = []
+    for r in rows:
+        text = _norm(f"{r[1]} {r[2]} {r[3]} {r[4]} {r[5]}")
+        if all(t in text for t in terms):
+            hits.append(r)
+    hits.sort(key=lambda r: (len(r[1]), r[1], r[0]))
+    return [dict(zip(ROW_FIELDS, r)) for r in hits[:limit]], len(hits)
+
+
+def find_aed(record_id: str) -> dict[str, Any] | None:
+    """공공데이터 원본 ID(SafeMap objt_id)로 정확히 일치하는 1건만 찾습니다."""
+    for r in get_dataset()["rows"]:
+        if r[0] == record_id:
+            return dict(zip(ROW_FIELDS, r))
+    return None
+
+
 def prewarm_points() -> None:
     if not db_configured():
         return
@@ -300,6 +357,12 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/aeds/points":
             self.handle_aeds_points()
             return
+        if parsed.path == "/api/aeds/search":
+            self.handle_aeds_search(parsed.query)
+            return
+        if parsed.path == "/api/aeds/item":
+            self.handle_aeds_item(parsed.query)
+            return
         super().do_GET()
 
     def handle_aeds_points(self) -> None:
@@ -354,28 +417,62 @@ class AEDCareHandler(SimpleHTTPRequestHandler):
         self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows), "limit": limit, "truncated": len(rows) >= limit}, PUBLIC_CACHE)
 
     def handle_aeds_nearest(self, query: str) -> None:
-        """GET /api/aeds/nearest?lat=&lng=[&limit=5] — 반경을 넓혀 가며 가까운 AED를 찾습니다."""
+        """GET /api/aeds/nearest?lat=&lng=[&radius=3000&limit=10]
+
+        정의된 검색 반경(직선거리) 안의 AED를 가까운 순으로 돌려줍니다.
+        반경 안에 결과가 없으면 items=[] (조회 성공, 0건)입니다.
+        """
         params = urllib.parse.parse_qs(query)
         lat = parse_float((params.get("lat") or [None])[0], *KOREA_LAT)
         lng = parse_float((params.get("lng") or [None])[0], *KOREA_LNG)
         if lat is None or lng is None:
             self.send_json(HTTPStatus.BAD_REQUEST, {"error": "BAD_LOCATION", "message": "국내 위도(lat)·경도(lng)가 필요합니다."})
             return
-        limit = safe_int((params.get("limit") or [None])[0], 5, 1, 50)
-        rows: list[dict[str, Any]] = []
+        limit = safe_int((params.get("limit") or [None])[0], 10, 1, 50)
+        radius = safe_int((params.get("radius") or [None])[0], NEAREST_DEFAULT_RADIUS_M, 100, NEAREST_MAX_RADIUS_M)
         try:
-            for span in (0.01, 0.03, 0.1, 0.3):  # 약 1km → 30km
-                rows = aeds_in_bbox(
-                    max(lng - span, KOREA_LNG[0]), max(lat - span, KOREA_LAT[0]),
-                    min(lng + span, KOREA_LNG[1]), min(lat + span, KOREA_LAT[1]),
-                    limit, lng, lat,
-                )
-                if rows:
-                    break
+            rows, total = aeds_within_radius(lat, lng, float(radius), limit)
         except DBError as exc:
             self.send_json(exc.status, {"error": exc.code, "message": exc.message})
             return
-        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows)}, PUBLIC_CACHE)
+        self.send_json(
+            HTTPStatus.OK,
+            {"items": rows, "count": len(rows), "totalInRadius": total, "radius_m": radius, "limit": limit,
+             "truncated": total > len(rows), "distanceType": "straight_line"},
+            PUBLIC_CACHE,
+        )
+
+    def handle_aeds_search(self, query: str) -> None:
+        """GET /api/aeds/search?q=부산시청&limit=10 — 장소·주소로 기준 위치를 직접 고를 때 사용."""
+        params = urllib.parse.parse_qs(query)
+        q = ((params.get("q") or [""])[0]).strip()[:60]
+        if len(q) < 2:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"error": "BAD_QUERY", "message": "검색어를 2자 이상 입력하세요."})
+            return
+        limit = safe_int((params.get("limit") or [None])[0], 10, 1, 30)
+        try:
+            rows, total = search_aeds(q, limit)
+        except DBError as exc:
+            self.send_json(exc.status, {"error": exc.code, "message": exc.message})
+            return
+        self.send_json(HTTPStatus.OK, {"items": rows, "count": len(rows), "total": total}, PUBLIC_CACHE)
+
+    def handle_aeds_item(self, query: str) -> None:
+        """GET /api/aeds/item?id=SafeMap원본ID — 원본 ID와 정확히 일치하는 공공 AED 1건 (연결 검증용)."""
+        params = urllib.parse.parse_qs(query)
+        record_id = ((params.get("id") or [""])[0]).strip()[:120]
+        if not record_id:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"error": "BAD_ID", "message": "공공데이터 원본 ID가 필요합니다."})
+            return
+        try:
+            item = find_aed(record_id)
+        except DBError as exc:
+            self.send_json(exc.status, {"error": exc.code, "message": exc.message})
+            return
+        if not item:
+            self.send_json(HTTPStatus.NOT_FOUND, {"error": "NOT_FOUND", "message": "해당 공공데이터 원본 ID가 DB에 없습니다."})
+            return
+        self.send_json(HTTPStatus.OK, {"item": item}, PUBLIC_CACHE)
 
     def handle_safemap(self, query: str) -> None:
         service_key = os.environ.get("SAFEMAP_SERVICE_KEY", "").strip().lstrip("\ufeff").strip()
