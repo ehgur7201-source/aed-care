@@ -18,7 +18,7 @@
   /* 세계: 공공건물 로비 벽의 AED 보관함과 비상 안내 표지. 무광 회색 함 위의 빨간 하트 하나 */
   --bg:#fafafa; --surface:#ffffff; --surface-2:#f4f4f5; --line:rgba(23,23,23,.09); --line-soft:rgba(23,23,23,.06);
   --text:#171717; --text-2:#525252; --muted:#6b6b6b; --faint:#737373;
-  --brand:#c62a22; --brand-2:#a8231c; --accent:#171717; --accent-2:#000000;
+  --brand:#c62a22; --brand-2:#a8231c; --accent:#1f6bff; --accent-2:#1557d6;
   --ok:#15803d; --ok-bg:rgba(21,128,61,.08); --ok-line:rgba(21,128,61,.24);
   --warn:#a16207; --warn-bg:rgba(161,98,7,.08); --warn-line:rgba(161,98,7,.26);
   --danger:#c81e1e; --danger-bg:rgba(200,30,30,.07); --danger-line:rgba(200,30,30,.24);
@@ -80,7 +80,7 @@ img{max-width:100%}
 .tabs{display:flex;gap:4px;margin-left:12px;overflow-x:auto;scrollbar-width:thin;white-space:nowrap}
 .tab{padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-2);transition:var(--ease);display:flex;align-items:center;gap:8px}
 .tab:hover{background:var(--surface-2)}
-.tab.active{color:var(--text);background:var(--surface-2);box-shadow:inset 0 -2px 0 var(--brand)}
+.tab.active{color:var(--accent);background:rgba(31,107,255,.07);box-shadow:inset 0 -2px 0 var(--accent)}
 .top-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 .tabs{flex:1 1 auto;min-width:0}.brand{flex:none;white-space:nowrap}.mode-switch,.ms-btn,.mode-chip,.top-export{white-space:nowrap;flex:none}
 .tab.active{border-radius:8px 8px 0 0}
@@ -298,6 +298,47 @@ img{max-width:100%}
 .i{flex:none;vertical-align:-3px}
 .sched-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.sched-grid .control{padding:8px;font-size:12px}
 @media(max-width:640px){.sched-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ---------- 시민 홈: 랜딩형 (밝은 그라데이션 히어로 + 어두운 섹션) ---------- */
+.lp{margin:-24px -20px -64px;font-feature-settings:"tnum"}
+.lp-hero{position:relative;overflow:hidden;text-align:center;padding:72px 24px 0;min-height:620px;color:#fff;background:linear-gradient(180deg,#14c8e6 0%,#1e9cf0 45%,#2f6bff 100%)}
+.lp-eyebrow{font-size:13px;font-weight:600;color:#3d86ff;margin-bottom:12px}.lp-eyebrow.light{color:rgba(255,255,255,.9)}.lp-eyebrow.small{font-size:12px}
+.lp-hero h1{font-size:64px;line-height:1.08;font-weight:800;letter-spacing:-.03em}
+.lp-lead{max-width:560px;margin:20px auto 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.9)}
+.lp-actions{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.lp-btn{display:inline-flex;align-items:center;gap:8px;border-radius:24px;padding:12px 24px;font-size:15px;font-weight:600;transition:var(--ease)}
+.lp-btn.solid{background:#fff;color:#c62a22}.lp-btn.solid:hover{background:#f4f4f5}
+.lp-btn.ghost{border:1.5px solid rgba(255,255,255,.85);color:#fff}.lp-btn.ghost:hover{background:rgba(255,255,255,.14)}
+.lp-btn.outline{border:1.5px solid rgba(255,255,255,.6);color:#fff;margin-top:40px}.lp-btn.outline:hover{background:rgba(255,255,255,.08)}
+.lp-btn.sm{padding:8px 16px;font-size:13px;margin-top:24px}
+.lp-btn:active{transform:scale(.98)}
+.lp-phone{position:relative;width:280px;height:360px;margin:48px auto 0;border-radius:44px 44px 0 0;background:#101012;padding:12px 12px 0;box-shadow:0 30px 60px rgba(10,30,90,.35)}
+.lp-notch{position:absolute;left:50%;top:22px;transform:translateX(-50%);width:92px;height:26px;border-radius:14px;background:#000;z-index:2}
+.lp-screen{height:100%;border-radius:34px 34px 0 0;background:#fff;color:#171717;padding:56px 16px 0;text-align:left;overflow:hidden}
+.lp-app-top{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.lp-app-card{margin-top:16px;border-radius:16px;padding:16px;color:#fff;background:linear-gradient(160deg,#4fd3ec,#2f6bff)}
+.lp-app-visual{display:grid;place-items:center;height:150px}.lp-app-visual svg{width:104px;height:auto}
+.lp-app-card b{display:block;font-size:17px;font-weight:700;margin-top:8px}.lp-app-card span{font-size:12px;opacity:.9}
+.lp-app-pills{display:flex;gap:6px;margin-top:12px}.lp-app-pills i{font-style:normal;font-size:11px;border:1px solid rgba(255,255,255,.7);border-radius:12px;padding:4px 10px}
+.lp-dark{position:relative;background:#000;color:#fff;text-align:center;padding:96px 24px 112px;border-radius:32px 32px 0 0;margin-top:-40px}
+.lp-dark + .lp-dark{margin-top:0;border-radius:0;border-top:1px solid #1f1f22}
+.lp-dark h2{font-size:40px;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+.lp-sub{max-width:560px;margin:20px auto 0;color:#9a9aa2;font-size:15px;line-height:1.7}
+.lp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1000px;margin:48px auto 0}
+.lp-stat{text-align:left;background:#1c1c1e;border-radius:16px;padding:28px 28px 32px}
+.lp-stat span{display:block;color:#9a9aa2;font-size:14px;line-height:1.5}
+.lp-stat b{display:block;font-size:36px;font-weight:700;margin-top:24px;letter-spacing:-.01em}
+.lp-feature{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1000px;margin:64px auto 0;text-align:left}
+.lp-feature h3{font-size:30px;line-height:1.35;font-weight:700}
+.lp-feature-text p:not(.lp-eyebrow){color:#9a9aa2;font-size:14px;line-height:1.7;margin-top:16px;max-width:420px}
+.lp-feature-art{background:#151517;border-radius:24px;padding:24px;display:grid;place-items:center}.lp-feature-art svg{width:100%;max-width:320px;height:auto}
+.lp-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1000px;margin:64px auto 0}
+.lp-link{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:#1c1c1e;color:#fff;border-radius:16px;padding:20px;transition:var(--ease)}
+.lp-link:hover{background:#26262a}.lp-link .i{color:#3d86ff}.lp-link b{font-size:15px;font-weight:600;margin-top:4px}.lp-link span{font-size:12px;color:#9a9aa2}
+.lp-link:focus-visible,.lp-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.lp-note{max-width:640px;margin:48px auto 0;font-size:12px;color:#7a7a82;line-height:1.6}
+#view .demo-banner + .lp{margin-top:0}
+@media(max-width:900px){.lp-hero h1{font-size:40px}.lp-dark h2{font-size:28px}.lp-stats,.lp-feature{grid-template-columns:1fr}.lp-links{grid-template-columns:1fr 1fr}.lp-feature h3{font-size:22px}.lp-dark{padding:72px 20px 80px}}
+@media(max-width:640px){.lp{margin:-16px -12px -48px}.lp-hero{padding-top:48px;min-height:560px}.lp-hero h1{font-size:34px}.lp-phone{width:240px;height:320px}}
 .top-export{white-space:nowrap}.notice-box{border:1px solid var(--warn-line);background:var(--warn-bg);border-radius:12px;padding:12px;font-size:13px;color:var(--text-2)}
 
 @media(max-width:1100px){.cta-grid{grid-template-columns:repeat(2,1fr)}.filter-panel{grid-template-columns:1fr 1fr}}
@@ -923,25 +964,70 @@ Views.home=function(host){
   const devices=publicDevices(),settings=Store.getSettings();const stat={ok:0,warn:0,danger:0};devices.forEach(d=>stat[deviceStatus(d).level]++);
   const inspected=devices.filter(d=>Store.lastInspection(d)).length;
   host.innerHTML=`
-    <section class="home-hero" aria-labelledby="homeTitle">
-      <div><span class="badge info">${esc(settings.org)}</span><h1 id="homeTitle">지금 열려 있고 점검된 AED를<br>가장 가까운 순서로 찾습니다</h1><p>AED Care는 시민에게 위치·공개 점검 상태·사용법을 안내합니다. 응급상황에서는 앱보다 먼저 119 신고와 가슴압박을 시작하세요.</p>
-        <ol class="hero-path" aria-label="추천 판정 순서"><li><span class="route-n">1</span>운영시간표상 출입 가능</li><li class="sep" aria-hidden="true">→</li><li><span class="route-n">2</span>관리자 점검 기록 확인</li><li class="sep" aria-hidden="true">→</li><li><span class="route-n">3</span>가까운 순 최대 3곳</li></ol></div>
-      <div class="hero-cabinet" aria-hidden="true">${aedCabinetSvg()}</div>
-      <div class="home-emergency"><div class="he-ico">${ico("siren",28)}</div><b style="font-size:18px">응급상황인가요?</b><p style="color:#fff;font-size:12px;margin-top:4px">이 앱은 119 신고를 대신하지 않습니다.</p><a class="btn" href="tel:119" aria-label="119 전화 걸기">${ico("phone")} 119 전화 걸기</a></div>
+  <div class="lp">
+    <section class="lp-hero" aria-labelledby="homeTitle">
+      <p class="lp-eyebrow light">${esc(settings.org)} · 자동심장충격기 안내</p>
+      <h1 id="homeTitle">가장 가까운 AED,<br>지금 쓸 수 있는 곳부터</h1>
+      <p class="lp-lead">출입 가능 시간과 관리자 점검 기록을 함께 확인해 사용 가능한 AED를 가까운 순서로 안내합니다</p>
+      <div class="lp-actions">
+        <a class="lp-btn solid" href="tel:119" aria-label="119 전화 걸기">${ico("phone")} 119 전화 걸기</a>
+        <button class="lp-btn ghost" type="button" data-home-go="map">${ico("map")} 내 주변 AED 찾기</button>
+      </div>
+      <div class="lp-phone" aria-hidden="true">
+        <div class="lp-notch"></div>
+        <div class="lp-screen">
+          <div class="lp-app-top"><b>AED Care</b><span>${ico("search")}</span></div>
+          <div class="lp-app-card">
+            <div class="lp-app-visual">${aedCabinetSvg()}</div>
+            <b>가까운 사용 가능 AED</b>
+            <span>출입 가능 · 점검 확인 · 가까운 순</span>
+            <div class="lp-app-pills"><i>출입 확인</i><i>점검 확인</i></div>
+          </div>
+        </div>
+      </div>
     </section>
-    ${hasSeedData()?`<div class="notice-box" style="margin-top:16px"><b>시연 데이터가 포함되어 있습니다</b> 현재 위치·점검 정보는 실제 운영 데이터가 아닌 예시일 수 있습니다.</div>`:""}
-    <div class="cta-grid">
-      <button class="card cta-card" data-home-go="map"><span class="cta-ico">${ico("map",20)}</span><b>내 주변 AED</b><p>지도에서 위치와 운영 정보를 확인합니다</p></button>
-      <button class="card cta-card" data-home-go="products"><span class="cta-ico">${ico("package",20)}</span><b>제품 사용법</b><p>설치 모델별 공통 사용 절차를 봅니다</p></button>
-      <button class="card cta-card" data-home-go="learn"><span class="cta-ico">${ico("book",20)}</span><b>3분 학습</b><p>단계별 학습과 퀴즈를 진행합니다</p></button>
-      <button class="card cta-card" data-home-go="status"><span class="cta-ico">${ico("clock",20)}</span><b>공개 점검 현황</b><p>최근 점검과 소모품 상태를 확인합니다</p></button>
-    </div>
-    <div class="grid kpi-grid">
-      <div class="card kpi"><div class="k-top"><span>정상 사용 가능</span></div><div class="k-val" style="color:var(--ok)">${stat.ok}<small> 대</small></div><div class="k-foot">현재 판정 기준</div></div>
-      <div class="card kpi"><div class="k-top"><span>확인·조치 필요</span></div><div class="k-val" style="color:var(--warn)">${stat.warn+stat.danger}<small> 대</small></div><div class="k-foot">임박·초과·미확인</div></div>
-      <div class="card kpi"><div class="k-top"><span>점검 기록 공개</span></div><div class="k-val">${inspected}<small> 대</small></div><div class="k-foot">최근 점검 기록 보유</div></div>
-    </div>`;
+
+    <section class="lp-dark">
+      <p class="lp-eyebrow">About</p>
+      <h2>가까워도 잠겨 있으면<br>쓸 수 없습니다</h2>
+      <p class="lp-sub">공공데이터의 설치 위치에 기관이 확인한 출입 시간과 점검 기록을 더해, 응급상황에서 실제로 쓸 수 있는 AED를 먼저 보여 줍니다</p>
+      <div class="lp-stats">
+        <div class="lp-stat"><span>전국 공공 AED<br>데이터베이스</span><b id="lpDbCount">확인 중</b></div>
+        <div class="lp-stat"><span>관리 기기 중<br>정상 사용 가능</span><b>${stat.ok.toLocaleString("ko-KR")}대</b></div>
+        <div class="lp-stat"><span>관리 기기 중<br>점검 기록 공개</span><b>${inspected.toLocaleString("ko-KR")}대</b></div>
+      </div>
+      <button class="lp-btn outline" type="button" data-home-go="status">점검 현황 보기</button>
+    </section>
+
+    <section class="lp-dark lp-service">
+      <p class="lp-eyebrow">Main Service</p>
+      <h2>찾고, 확인하고,<br>바로 다음 후보로</h2>
+      <div class="lp-feature">
+        <div class="lp-feature-text">
+          <p class="lp-eyebrow small">출입 판정</p>
+          <h3>밤 11시에 잠긴 건물보다<br>열려 있는 곳을 먼저</h3>
+          <p>서울 시간 기준 운영시간표로 출입 가능 여부를 계산하고, 자정을 넘는 시간표와 휴일도 반영합니다. 접근이 어려우면 버튼 하나로 다음 후보를 찾습니다</p>
+          <button class="lp-btn outline sm" type="button" data-home-go="map">지도에서 확인하기</button>
+        </div>
+        <div class="lp-feature-art" aria-hidden="true">
+          <svg viewBox="0 0 320 300"><rect x="70" y="20" width="150" height="250" rx="4" fill="none" stroke="#3a3a3c" stroke-width="2"/><rect x="88" y="40" width="114" height="96" rx="2" fill="none" stroke="#3a3a3c" stroke-width="2"/><rect x="88" y="152" width="114" height="96" rx="2" fill="none" stroke="#3a3a3c" stroke-width="2"/><circle cx="196" cy="150" r="4" fill="#3a3a3c"/>
+            <g transform="translate(176 170)"><rect width="112" height="78" rx="6" fill="#1f6bff"/><rect y="0" width="112" height="22" rx="6" fill="#4d8bff"/><path d="M56 62s-14-8-14-17c0-4.4 3.5-8 7.6-8 2.6 0 4.9 1.3 6.4 3.3 1.5-2 3.8-3.3 6.4-3.3 4.1 0 7.6 3.6 7.6 8 0 9-14 17-14 17z" fill="#fff"/><text x="10" y="15" fill="#fff" font-size="10" font-family="Pretendard Variable,sans-serif" font-weight="700">AED Care</text></g></svg>
+        </div>
+      </div>
+      <div class="lp-links">
+        <button class="lp-link" type="button" data-home-go="map">${ico("map",20)}<b>내 주변 AED</b><span>출입·점검 상태와 함께 지도에서 확인</span></button>
+        <button class="lp-link" type="button" data-home-go="products">${ico("package",20)}<b>제품 사용법</b><span>설치 모델별 공통 사용 절차</span></button>
+        <button class="lp-link" type="button" data-home-go="learn">${ico("book",20)}<b>3분 학습</b><span>단계별 학습과 퀴즈</span></button>
+        <button class="lp-link" type="button" data-home-go="status">${ico("clock",20)}<b>공개 점검 현황</b><span>최근 점검과 소모품 상태</span></button>
+      </div>
+      <p class="lp-note">이 앱은 119 신고를 대신하지 않습니다. 응급상황에서는 먼저 119에 신고하고 가슴압박을 시작하세요${hasSeedData()?" · 시연 데이터가 포함되어 있어 위치·점검 정보는 예시일 수 있습니다":""}</p>
+    </section>
+  </div>`;
   host.querySelectorAll("[data-home-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.homeGo)));
+  // 전국 건수는 서버가 조회한 실제 집계만 표시
+  const box=$("#lpDbCount");
+  dbHealth().then(h=>{if(h!=="configured"){if(box)box.textContent=h==="not_configured"?"DB 설정 누락":"연결 실패";return;}
+    loadDbPoints().then(p=>{const el=$("#lpDbCount");if(el)el.textContent=`${Number(p.count).toLocaleString("ko-KR")}곳`;}).catch(()=>{const el=$("#lpDbCount");if(el)el.textContent="조회 실패";});});
 };
 
 /* ============================================================
